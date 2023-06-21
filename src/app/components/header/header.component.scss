@@ -1,0 +1,12 @@
+header {
+  background-color: cornflowerblue;
+  margin: 0;
+  padding: 0 1rem;
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+}
+
+header h1 {
+  margin: 0;
+}

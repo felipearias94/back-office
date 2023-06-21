@@ -1,0 +1,11 @@
+aside {
+  height: calc(100vh - var(--header-height));
+  background-color: bisque;
+  width: var(--sidebar-width);
+  position: fixed;
+  padding: 13px;
+}
+
+p {
+    margin: 0;
+}
