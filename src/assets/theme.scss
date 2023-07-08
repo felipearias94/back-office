@@ -1,0 +1,117 @@
+@import "@angular/material/theming";
+@include mat-core();
+
+$backoffice-primary: (
+  50: #f7faf6,
+  100: #ebf3ea,
+  200: #ddebdc,
+  300: #cfe2cd,
+  400: #c5dcc3,
+  500: #bbd6b8,
+  600: #b5d1b1,
+  700: #accca8,
+  800: #a4c6a0,
+  900: #96bc91,
+  A100: #ffffff,
+  A200: #ffffff,
+  A400: #f1ffef,
+  A700: #daffd5,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #000000,
+    600: #000000,
+    700: #000000,
+    800: #000000,
+    900: #000000,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
+);
+
+$backoffice-accent: (
+  50: #e5f4e9,
+  100: #bfe5c7,
+  200: #94d3a2,
+  300: #69c17d,
+  400: #48b461,
+  500: #28a745,
+  600: #249f3e,
+  700: #1e9636,
+  800: #188c2e,
+  900: #0f7c1f,
+  A100: #aeffb8,
+  A200: #7bff8b,
+  A400: #48ff5e,
+  A700: #2fff47,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
+);
+
+$backoffice-warn: (
+  50: #fee9e9,
+  100: #fdc7c8,
+  200: #fca2a4,
+  300: #fb7c80,
+  400: #fa6064,
+  500: #f94449,
+  600: #f83e42,
+  700: #f73539,
+  800: #f62d31,
+  900: #f51f21,
+  A100: #ffffff,
+  A200: #fff7f7,
+  A400: #ffc4c5,
+  A700: #ffabac,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
+);
+
+$backoffice-palette-primary: mat-palette($backoffice-primary);
+$backoffice-palette-accent: mat-palette($backoffice-accent);
+$backoffice-palette-warn: mat-palette($backoffice-warn);
+
+$backoffice-theme-light: mat-light-theme(
+  (
+    color: (
+      primary: $backoffice-palette-primary,
+      accent: $backoffice-palette-accent,
+      warn: $backoffice-palette-warn,
+    ),
+  )
+);
+
+@include angular-material-theme($backoffice-theme-light);
