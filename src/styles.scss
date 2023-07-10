@@ -134,7 +134,7 @@ $backoffice-theme: mat.define-light-theme(
 @include mat.all-component-themes($backoffice-theme);
 
 :root {
-  --header-height: 60px;
+  --header-height: 64px;
   --sidebar-width: 200px;
 }
 
