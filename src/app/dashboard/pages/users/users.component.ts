@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { UserFormDialogComponent } from './user-form-dialog/user-form-dialog.component';
+import { User } from 'src/app/interfaces/User';
 
 @Component({
   selector: 'app-users',
@@ -7,31 +9,29 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./users.component.scss'],
 })
 export class UsersComponent {
-  nameControl = new FormControl('', [Validators.required]);
-  lastNameControl = new FormControl('', [Validators.required]);
-  emailControl = new FormControl('', [Validators.required, Validators.email]);
-  passwordControl = new FormControl('', [
-    Validators.required,
-    Validators.minLength(6),
-  ]);
+  constructor(private matDialog: MatDialog) {}
+  users: User[] = [];
 
-  userForm = new FormGroup({
-    name: this.nameControl,
-    lastName: this.lastNameControl,
-    email: this.emailControl,
-    password: this.passwordControl,
-  });
-
-  hidePassword = true;
-
-  getErrorMessages(field: FormControl): string {
-    if (field.hasError('required')) {
-      return 'Este campo es requerido';
-    }
-    return '';
-  }
-
-  onSubmit(): void {
-    alert(JSON.stringify(this.userForm.value));
+  onCreateUser(): void {
+    this.matDialog
+      .open(UserFormDialogComponent)
+      .afterClosed()
+      .subscribe({
+        next: (formValue) => {
+          if (formValue) {
+            console.log('SE RECIBIO', formValue);
+            this.users = [
+              ...this.users,
+              {
+                id: this.users.length + 1,
+                name: formValue.name,
+                lastName: formValue.lastName,
+                email: formValue.email,
+                password: formValue.password,
+              },
+            ];
+          }
+        },
+      });
   }
 }

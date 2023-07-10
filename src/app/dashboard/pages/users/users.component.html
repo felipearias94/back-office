@@ -1,88 +1,12 @@
-<mat-card class="form-card">
-  <mat-card-header class="pb-4">
-    <mat-card-title>Nuevo usuario</mat-card-title>
-
-    <mat-card-subtitle>Campos con * son requeridos</mat-card-subtitle>
-  </mat-card-header>
-
-  <mat-card-content>
-    <form class="container m-0" [formGroup]="userForm">
-      <div class="row">
-        <mat-form-field appearance="outline" class="w-100">
-          <mat-label>Nombre</mat-label>
-          <input
-            [formControl]="nameControl"
-            type="text"
-            matInput
-            placeholder="Nombre"
-            name="name"
-          />
-          <mat-error *ngIf="nameControl.hasError('required')">{{
-            getErrorMessages(nameControl)
-          }}</mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="outline" class="w-100">
-          <mat-label>Apellido</mat-label>
-          <input
-            [formControl]="lastNameControl"
-            type="text"
-            matInput
-            placeholder="Apellido"
-            name="lastName"
-          />
-          <mat-error *ngIf="lastNameControl.hasError('required')">{{
-            getErrorMessages(lastNameControl)
-          }}</mat-error>
-        </mat-form-field>
-      </div>
-      <div class="row">
-        <mat-form-field appearance="outline" class="col-6">
-          <mat-label>Email</mat-label>
-          <input
-            [formControl]="emailControl"
-            type="email"
-            matInput
-            placeholder="Email"
-            name="email"
-          />
-          <mat-error *ngIf="emailControl.hasError('required')">{{
-            getErrorMessages(emailControl)
-          }}</mat-error>
-        </mat-form-field>
-        <mat-form-field class="col-6" appearance="outline">
-          <mat-label>Ingrese contraseña</mat-label>
-          <input
-            [formControl]="passwordControl"
-            matInput
-            [type]="hidePassword ? 'password' : 'text'"
-          />
-          <button
-            mat-icon-button
-            matSuffix
-            (click)="hidePassword = !hidePassword"
-            [attr.aria-label]="'Ocultar contraseña'"
-            [attr.aria-pressed]="hidePassword"
-          >
-            <mat-icon>{{
-              hidePassword ? "visibility_off" : "visibility"
-            }}</mat-icon>
-          </button>
-          <mat-error *ngIf="passwordControl.hasError('required')">{{
-            getErrorMessages(passwordControl)
-          }}</mat-error>
-        </mat-form-field>
-      </div>
-      <div class="d-flex justify-content-end">
-        <button
-          type="submit"
-          mat-raised-button
-          color="primary"
-          (click)="onSubmit()"
-        >
-          Guardar
-        </button>
-      </div>
-    </form>
-    <pre>{{ userForm.value | json }}</pre>
-  </mat-card-content>
-</mat-card>
+<div class="mb-5">
+  <button
+    mat-flat-button
+    color="primary"
+    type="button"
+    (click)="onCreateUser()"
+  >
+    <mat-icon>add</mat-icon>
+    Crear usuario
+  </button>
+</div>
+<app-users-table [dataSource]="users"></app-users-table>
