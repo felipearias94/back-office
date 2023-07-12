@@ -10,7 +10,22 @@ import { User } from 'src/app/interfaces/User';
 })
 export class UsersComponent {
   constructor(private matDialog: MatDialog) {}
-  users: User[] = [];
+  users: User[] = [
+    {
+      id: 1,
+      name: 'Felipe',
+      lastName: 'Arias',
+      email: 'felipe.arias@gmail.com',
+      password: '123123123',
+    },
+    {
+      id: 2,
+      name: 'Juan',
+      lastName: 'Perez',
+      email: 'jperez@gmail.com',
+      password: '123123123',
+    },
+  ];
 
   onCreateUser(): void {
     this.matDialog
@@ -19,7 +34,6 @@ export class UsersComponent {
       .subscribe({
         next: (formValue) => {
           if (formValue) {
-            console.log('SE RECIBIO', formValue);
             this.users = [
               ...this.users,
               {

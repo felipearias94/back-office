@@ -1,17 +1,28 @@
-import { Component } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
-import { UserForm } from 'src/app/interfaces/User';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { User, UserForm } from 'src/app/interfaces/User';
 
 @Component({
   selector: 'app-user-form-dialog',
   templateUrl: './user-form-dialog.component.html',
   styleUrls: ['./user-form-dialog.component.scss'],
 })
-export class UserFormDialogComponent {
-  constructor(private dialogRef: MatDialogRef<UserFormDialogComponent>) {}
+export class UserFormDialogComponent implements OnInit {
+  constructor(
+    private dialogRef: MatDialogRef<UserFormDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) private updeteableUser: User
+  ) {}
 
-  nameControl = new FormControl('', [Validators.required]);
+  ngOnInit(): void {
+    this.parseUserToEdit();
+  }
+
+  //Form Controls
+  nameControl = new FormControl('', [
+    Validators.required,
+    Validators.minLength(2),
+  ]);
   lastNameControl = new FormControl('', [Validators.required]);
   emailControl = new FormControl('', [Validators.required, Validators.email]);
   passwordControl = new FormControl('', [
@@ -27,13 +38,10 @@ export class UserFormDialogComponent {
   });
 
   hidePassword = true;
-  userRegistered = [];
+  isEditing = !!this.updeteableUser;
 
-  getErrorMessages(field: FormControl): string {
-    if (field.hasError('required')) {
-      return 'Este campo es requerido';
-    }
-    return '';
+  parseUserToEdit(): void {
+    this.userForm.patchValue(this.updeteableUser)
   }
 
   onSubmit(): void {
