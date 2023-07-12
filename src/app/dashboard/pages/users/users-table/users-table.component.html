@@ -1,5 +1,6 @@
 <div *ngIf="dataSource.length == 0">No hay usuarios</div>
 <table
+  #userTable
   *ngIf="dataSource.length > 0"
   mat-table
   [dataSource]="dataSource"

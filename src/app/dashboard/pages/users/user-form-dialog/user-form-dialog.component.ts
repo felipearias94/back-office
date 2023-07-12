@@ -41,11 +41,18 @@ export class UserFormDialogComponent implements OnInit {
   isEditing = !!this.updeteableUser;
 
   parseUserToEdit(): void {
-    this.userForm.patchValue(this.updeteableUser)
+    this.userForm.patchValue(this.updeteableUser);
   }
 
   onSubmit(): void {
     if (this.userForm.valid) {
+      if (this.updeteableUser) {
+        this.dialogRef.close({
+          ...this.userForm.value,
+          id: this.updeteableUser.id,
+        });
+        return;
+      }
       this.dialogRef.close(this.userForm.value);
       return;
     }
