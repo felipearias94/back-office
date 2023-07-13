@@ -1,11 +1,15 @@
 <mat-card class="modal-wrapper">
   <mat-card-header class="pb-4">
-    <mat-card-title higherFont>Borrar selección</mat-card-title>
+    <mat-card-title higherFont>{{ data.title }}</mat-card-title>
   </mat-card-header>
-  <mat-card-content> Está seguro de borrar al usuario?</mat-card-content>
-  <div mat-dialog-actions class="d-flex justify-content-end mt-4">
-    <button type="submit" mat-button mat-dialog-close (click)="onRejectAction()">No</button>
-    <button type="submit" mat-button color="warn" (click)="onAcceptAction()">
+  <mat-card-content> {{ data.message }}</mat-card-content>
+  <div mat-dialog-actions class="actions d-flex justify-content-end mt-4">
+    <button mat-button (click)="onRejectAction()">No</button>
+    <button
+      mat-raised-button
+      color="{{ isDelete ? 'warn' : 'primary' }}"
+      (click)="onAcceptAction()"
+    >
       Sí
     </button>
   </div>

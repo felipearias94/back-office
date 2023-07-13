@@ -1,6 +1,16 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
+export enum ConfirmationType {
+  DELETE = 'delete',
+}
+
+export interface ConfirmationData {
+  title: string;
+  message: string;
+  type: ConfirmationType;
+}
+
 @Component({
   selector: 'app-confirm-action-modal',
   templateUrl: './confirm-action-modal.component.html',
@@ -9,8 +19,10 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 export class ConfirmActionModalComponent {
   constructor(
     private dialogRef: MatDialogRef<ConfirmActionModalComponent>,
-    @Inject(MAT_DIALOG_DATA) private data: unknown
+    @Inject(MAT_DIALOG_DATA) public data: ConfirmationData
   ) {}
+
+  isDelete = this.data.type === ConfirmationType.DELETE;
 
   onAcceptAction(): void {
     this.dialogRef.close(true);

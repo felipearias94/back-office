@@ -2,6 +2,10 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { UserFormDialogComponent } from './user-form-dialog/user-form-dialog.component';
 import { User } from 'src/app/interfaces/User';
+import {
+  ConfirmActionModalComponent,
+  ConfirmationType,
+} from 'src/app/shared/components/confirm-action-modal/confirm-action-modal.component';
 
 @Component({
   selector: 'app-users',
@@ -46,6 +50,36 @@ export class UsersComponent {
             ];
           }
         },
+      });
+  }
+
+  onEditUser(userToEdit: User): void {
+    this.matDialog
+      .open(UserFormDialogComponent, { data: userToEdit })
+      .afterClosed()
+      .subscribe({
+        next: (updatedUser: User) => {
+          this.users = this.users.map((user: User) => {
+            return user.id === updatedUser.id ? updatedUser : user;
+          });
+        },
+      });
+  }
+
+  onDeleteUser(userToDelete: User): void {
+    this.matDialog
+      .open(ConfirmActionModalComponent, {
+        data: {
+          title: 'Borrar selección',
+          message: `Está seguro de borrar a ${userToDelete.name} ${userToDelete.lastName}?`,
+          type: ConfirmationType.DELETE,
+        },
+      })
+      .afterClosed()
+      .subscribe((confirmation) => {
+        if (confirmation) {
+          this.users = this.users.filter((user) => user.id !== userToDelete.id);
+        }
       });
   }
 }

@@ -19,13 +19,16 @@ export class UserFormDialogComponent implements OnInit {
   }
 
   //Form Controls
-  nameControl = new FormControl('', [
+  nameControl = new FormControl<string | null>('', [
     Validators.required,
     Validators.minLength(2),
   ]);
-  lastNameControl = new FormControl('', [Validators.required]);
-  emailControl = new FormControl('', [Validators.required, Validators.email]);
-  passwordControl = new FormControl('', [
+  lastNameControl = new FormControl<string | null>('', [Validators.required]);
+  emailControl = new FormControl<string | null>('', [
+    Validators.required,
+    Validators.email,
+  ]);
+  passwordControl = new FormControl<string | null>('', [
     Validators.required,
     Validators.minLength(6),
   ]);
@@ -46,7 +49,7 @@ export class UserFormDialogComponent implements OnInit {
 
   onSubmit(): void {
     if (this.userForm.valid) {
-      if (this.updeteableUser) {
+      if (this.isEditing) {
         this.dialogRef.close({
           ...this.userForm.value,
           id: this.updeteableUser.id,

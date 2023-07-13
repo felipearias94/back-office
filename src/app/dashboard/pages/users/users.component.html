@@ -13,4 +13,4 @@
   <mat-icon>group</mat-icon>
   <h3>Usuarios registrados</h3>
 </div>
-<app-users-table [dataSource]="users"></app-users-table>
+<app-users-table [dataSource]="users" (deleteUser)="onDeleteUser($event)" (editUser)="onEditUser($event)"></app-users-table>
