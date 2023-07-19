@@ -8,6 +8,7 @@ import {
 } from 'src/app/shared/components/confirm-action-modal/confirm-action-modal.component';
 import { UserService } from 'src/app/services/user.service';
 import { NotificationService } from 'src/app/services/notification.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-users',
@@ -15,14 +16,14 @@ import { NotificationService } from 'src/app/services/notification.service';
   styleUrls: ['./users.component.scss'],
 })
 export class UsersComponent {
-  users$: User[];
+  users$: Observable<User[]>;
 
   constructor(
     private userService: UserService,
     private matDialog: MatDialog,
     private notificationService: NotificationService
   ) {
-    this.userService.getUsers().subscribe((users) => (this.users$ = users));
+    this.users$ = this.userService.getUsers();
   }
 
   onCreateUser(): void {
