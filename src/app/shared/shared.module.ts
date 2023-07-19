@@ -5,7 +5,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
-import { MatCard, MatCardModule } from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -16,6 +16,7 @@ import { HigherFontDirective } from './directives/higher-font.directive';
 import { FullNamePipe } from './pipes/full-name/full-name.pipe';
 import { BoButtonComponent } from './components/bo-button/bo-button.component';
 import { ConfirmActionModalComponent } from './components/confirm-action-modal/confirm-action-modal.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { ConfirmActionModalComponent } from './components/confirm-action-modal/c
     MatToolbarModule,
     MatIconModule,
     MatCardModule,
+    MatSnackBarModule,
   ],
   exports: [
     // Components
@@ -48,6 +50,7 @@ import { ConfirmActionModalComponent } from './components/confirm-action-modal/c
     MatInputModule,
     MatDialogModule,
     MatTableModule,
+    MatSnackBarModule,
     // Directives-Pipes
     ControlErrorMessagePipe,
     FullNamePipe,

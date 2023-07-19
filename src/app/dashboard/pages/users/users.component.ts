@@ -6,6 +6,8 @@ import {
   ConfirmActionModalComponent,
   ConfirmationType,
 } from 'src/app/shared/components/confirm-action-modal/confirm-action-modal.component';
+import { UserService } from 'src/app/services/user.service';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-users',
@@ -13,41 +15,27 @@ import {
   styleUrls: ['./users.component.scss'],
 })
 export class UsersComponent {
-  constructor(private matDialog: MatDialog) {}
-  users: User[] = [
-    {
-      id: 1,
-      name: 'Felipe',
-      lastName: 'Arias',
-      email: 'felipe.arias@gmail.com',
-      password: '123123123',
-    },
-    {
-      id: 2,
-      name: 'Juan',
-      lastName: 'Perez',
-      email: 'jperez@gmail.com',
-      password: '123123123',
-    },
-  ];
+  users$: User[];
+
+  constructor(
+    private userService: UserService,
+    private matDialog: MatDialog,
+    private notificationService: NotificationService
+  ) {
+    this.userService.getUsers().subscribe((users) => (this.users$ = users));
+  }
 
   onCreateUser(): void {
     this.matDialog
       .open(UserFormDialogComponent)
       .afterClosed()
       .subscribe({
-        next: (formValue) => {
-          if (formValue) {
-            this.users = [
-              ...this.users,
-              {
-                id: this.users.length + 1,
-                name: formValue.name,
-                lastName: formValue.lastName,
-                email: formValue.email,
-                password: formValue.password,
-              },
-            ];
+        next: (newUser: User) => {
+          if (newUser) {
+            this.userService.createUser(newUser);
+            this.notificationService.showNotification(
+              `Se creó correctamente al usuario: ${newUser.name} ${newUser.lastName}`
+            );
           }
         },
       });
@@ -59,9 +47,10 @@ export class UsersComponent {
       .afterClosed()
       .subscribe({
         next: (updatedUser: User) => {
-          this.users = this.users.map((user: User) => {
-            return user.id === updatedUser.id ? updatedUser : user;
-          });
+          this.userService.editUser(updatedUser);
+          this.notificationService.showNotification(
+            `Se actualizó al usuario: ${updatedUser.name} ${updatedUser.lastName}`
+          );
         },
       });
   }
@@ -78,7 +67,10 @@ export class UsersComponent {
       .afterClosed()
       .subscribe((confirmation) => {
         if (confirmation) {
-          this.users = this.users.filter((user) => user.id !== userToDelete.id);
+          this.userService.deleteUser(userToDelete.id);
+          this.notificationService.showNotification(
+            `Se eliminó al usuario: ${userToDelete.name} ${userToDelete.lastName}`
+          );
         }
       });
   }
