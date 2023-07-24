@@ -25,6 +25,16 @@
     <td mat-cell *matCellDef="let user">
       <button
         mat-icon-button
+        color="primary"
+        aria-label="Example icon button with a heart icon"
+        [routerLink]="user.id"
+      >
+        <mat-icon
+          ><span class="material-symbols-outlined"> visibility </span></mat-icon
+        >
+      </button>
+      <button
+        mat-icon-button
         color="black"
         aria-label="Example icon button with a heart icon"
         (click)="editUser.emit(user)"

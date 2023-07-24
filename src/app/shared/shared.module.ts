@@ -17,6 +17,8 @@ import { FullNamePipe } from './pipes/full-name/full-name.pipe';
 import { BoButtonComponent } from './components/bo-button/bo-button.component';
 import { ConfirmActionModalComponent } from './components/confirm-action-modal/confirm-action-modal.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatListModule } from '@angular/material/list';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -29,12 +31,14 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
   ],
   imports: [
     CommonModule,
+    RouterModule,
     MatSidenavModule,
     MatButtonModule,
     MatToolbarModule,
     MatIconModule,
     MatCardModule,
     MatSnackBarModule,
+    MatListModule,
   ],
   exports: [
     // Components
