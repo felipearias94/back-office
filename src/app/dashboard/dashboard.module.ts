@@ -6,10 +6,22 @@ import { UsersModule } from './pages/users/users.module';
 import { HeaderComponent } from '../shared/components/header/header.component';
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
+import { StudentsModule } from './pages/students/students.module';
+import { CoursesModule } from './pages/courses/courses.module';
+import { InscriptionsModule } from './pages/inscriptions/inscriptions.module';
 
 @NgModule({
   declarations: [DashboardComponent],
-  imports: [CommonModule, HomeModule, RouterModule, UsersModule, SharedModule],
+  imports: [
+    CommonModule,
+    HomeModule,
+    RouterModule,
+    UsersModule,
+    StudentsModule,
+    CoursesModule,
+    InscriptionsModule,
+    SharedModule,
+  ],
   exports: [DashboardComponent],
 })
 export class DashboardModule {}

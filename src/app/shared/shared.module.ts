@@ -19,6 +19,7 @@ import { ConfirmActionModalComponent } from './components/confirm-action-modal/c
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
+import { BackButtonComponent } from './components/back-button/back-button.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { RouterModule } from '@angular/router';
     FullNamePipe,
     BoButtonComponent,
     ConfirmActionModalComponent,
+    BackButtonComponent,
   ],
   imports: [
     CommonModule,
@@ -45,6 +47,7 @@ import { RouterModule } from '@angular/router';
     HeaderComponent,
     BoButtonComponent,
     ConfirmActionModalComponent,
+    BackButtonComponent,
     // Modules
     MatIconModule,
     MatButtonModule,

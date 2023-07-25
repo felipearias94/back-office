@@ -14,5 +14,14 @@ export class UserDetailsComponent {
     private userService: UserService
   ) {
     this.userId = Number(this.activatedRoute.snapshot.params['id']);
+    this.loadUserById();
+  }
+
+  loadUserById(): void {
+    this.userService.getUserById(this.userId).subscribe({
+      next: (user) => {
+        console.log(user);
+      },
+    });
   }
 }
