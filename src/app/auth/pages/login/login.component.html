@@ -1,1 +1,19 @@
-<p>login works!</p>
+<h4>Iniciar sesion</h4>
+<div class="">
+  <mat-form-field class="w-100">
+    <mat-label>Email</mat-label>
+    <input matInput />
+  </mat-form-field>
+
+  <mat-form-field class="w-100">
+    <mat-label>Contrasena</mat-label>
+    <input type="password" matInput />
+  </mat-form-field>
+
+  <div class="d-flex justify-content-end gap-4">
+    <button mat-button color="black" routerLink="register">Registrarse</button>
+    <button routerLink="/dashboard" mat-flat-button color="primary">
+      Ingresar
+    </button>
+  </div>
+</div>
