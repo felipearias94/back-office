@@ -1,1 +1,9 @@
-<p>bo-button works!</p>
+<button
+  mat-flat-button
+  [color]="colorType ? colorType : 'primary'"
+  type="button"
+  (click)="onClickButton()"
+>
+  <mat-icon>{{ iconName }}</mat-icon>
+  {{ label }}
+</button>

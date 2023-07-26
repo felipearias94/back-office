@@ -20,6 +20,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
 import { BackButtonComponent } from './components/back-button/back-button.component';
+import { NoDataComponent } from './components/no-data/no-data.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { BackButtonComponent } from './components/back-button/back-button.compon
     BoButtonComponent,
     ConfirmActionModalComponent,
     BackButtonComponent,
+    NoDataComponent,
   ],
   imports: [
     CommonModule,
@@ -48,6 +50,7 @@ import { BackButtonComponent } from './components/back-button/back-button.compon
     BoButtonComponent,
     ConfirmActionModalComponent,
     BackButtonComponent,
+    NoDataComponent,
     // Modules
     MatIconModule,
     MatButtonModule,

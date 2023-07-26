@@ -8,7 +8,7 @@ import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { StudentsModule } from './pages/students/students.module';
 import { CoursesModule } from './pages/courses/courses.module';
-import { InscriptionsModule } from './pages/inscriptions/inscriptions.module';
+import { ClassesModule } from './pages/classes/classes.module';
 
 @NgModule({
   declarations: [DashboardComponent],
@@ -18,8 +18,8 @@ import { InscriptionsModule } from './pages/inscriptions/inscriptions.module';
     RouterModule,
     UsersModule,
     StudentsModule,
+    ClassesModule,
     CoursesModule,
-    InscriptionsModule,
     SharedModule,
   ],
   exports: [DashboardComponent],

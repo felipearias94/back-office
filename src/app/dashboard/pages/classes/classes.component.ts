@@ -1,18 +1,20 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { CoursesService } from 'src/app/services/courses.service';
+import { ClassesService } from 'src/app/services/classes.service';
 import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
-  selector: 'app-courses',
-  templateUrl: './courses.component.html',
-  styleUrls: ['./courses.component.scss'],
+  selector: 'app-classes',
+  templateUrl: './classes.component.html',
+  styleUrls: ['./classes.component.scss'],
 })
-export class CoursesComponent {
+export class ClassesComponent {
+  
   constructor(
-    private coursesService:CoursesService,
+    private classesService: ClassesService,
     private matDialog: MatDialog,
     private notificationService: NotificationService
   ) {}
-  onAddNewCourse(): void {}
+
+  onAddNewClass(): void {}
 }

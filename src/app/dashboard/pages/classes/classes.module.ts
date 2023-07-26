@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { InscriptionsComponent } from './inscriptions.component';
+import { ClassesComponent } from './classes.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
-  declarations: [InscriptionsComponent],
+  declarations: [ClassesComponent],
   imports: [CommonModule, SharedModule],
 })
-export class InscriptionsModule {}
+export class ClassesModule {}

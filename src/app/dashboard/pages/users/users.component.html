@@ -1,13 +1,9 @@
 <div class="mb-5">
-  <button
-    mat-flat-button
-    color="primary"
-    type="button"
-    (click)="onCreateUser()"
-  >
-    <mat-icon>person_add</mat-icon>
-    Crear usuario
-  </button>
+  <app-bo-button
+    iconName="person_add"
+    label="Crear usuario"
+    (onClick)="onCreateUser()"
+  ></app-bo-button>
 </div>
 <div class="title d-flex">
   <mat-icon>group</mat-icon>
