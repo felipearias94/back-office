@@ -9,11 +9,13 @@ import { RouterModule } from '@angular/router';
 import { StudentsModule } from './pages/students/students.module';
 import { CoursesModule } from './pages/courses/courses.module';
 import { ClassesModule } from './pages/classes/classes.module';
+import { DashboardRoutingModule } from './dashboard-routing.module';
 
 @NgModule({
   declarations: [DashboardComponent],
   imports: [
     CommonModule,
+    DashboardRoutingModule,
     HomeModule,
     RouterModule,
     UsersModule,

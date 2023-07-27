@@ -21,6 +21,8 @@ import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
 import { BackButtonComponent } from './components/back-button/back-button.component';
 import { NoDataComponent } from './components/no-data/no-data.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -61,6 +63,8 @@ import { NoDataComponent } from './components/no-data/no-data.component';
     MatDialogModule,
     MatTableModule,
     MatSnackBarModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     // Directives-Pipes
     ControlErrorMessagePipe,
     FullNamePipe,
