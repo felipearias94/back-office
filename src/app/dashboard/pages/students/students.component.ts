@@ -5,7 +5,10 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { StudentsService } from 'src/app/services/students.service';
 import { StudentFormDialogComponent } from './student-form-dialog/student-form-dialog.component';
 import { Student } from 'src/app/interfaces/Students';
-import { ConfirmActionModalComponent, ConfirmationType } from 'src/app/shared/components/confirm-action-modal/confirm-action-modal.component';
+import {
+  ConfirmActionModalComponent,
+  ConfirmationType,
+} from 'src/app/shared/components/confirm-action-modal/confirm-action-modal.component';
 
 @Component({
   selector: 'app-students',
@@ -31,6 +34,9 @@ export class StudentsComponent {
         next: (newStudent) => {
           if (newStudent) {
             this.studentsService.createStudent(newStudent);
+            this.notificationService.showNotification(
+              `Se creó correctamente al alumno: ${newStudent.name} ${newStudent.lastName}`
+            );
           }
         },
       });
