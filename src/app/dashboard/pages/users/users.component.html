@@ -1,0 +1,20 @@
+<div class="mb-5">
+  <button
+    mat-flat-button
+    color="primary"
+    type="button"
+    (click)="onCreateUser()"
+  >
+    <mat-icon>person_add</mat-icon>
+    Crear usuario
+  </button>
+</div>
+<div class="title d-flex">
+  <mat-icon>group</mat-icon>
+  <h3>Usuarios registrados</h3>
+</div>
+<app-users-table
+  [dataSource]="(users$ | async) || []"
+  (deleteUser)="onDeleteUser($event)"
+  (editUser)="onEditUser($event)"
+></app-users-table>

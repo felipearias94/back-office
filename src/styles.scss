@@ -1,5 +1,7 @@
+@import "./assets/theme.scss";
+
 :root {
-  --header-height: 60px;
+  --header-height: 64px;
   --sidebar-width: 200px;
 }
 
@@ -9,4 +11,13 @@
 
 body {
   margin: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
