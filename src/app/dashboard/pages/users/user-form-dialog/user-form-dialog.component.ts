@@ -11,7 +11,7 @@ import { User, UserForm } from 'src/app/interfaces/User';
 export class UserFormDialogComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<UserFormDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) private updeteableUser: User
+    @Inject(MAT_DIALOG_DATA) public updeteableUser: User
   ) {}
 
   ngOnInit(): void {

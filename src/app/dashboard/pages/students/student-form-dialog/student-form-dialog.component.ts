@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Student, StudentForm } from 'src/app/interfaces/Students';
@@ -8,13 +8,13 @@ import { Student, StudentForm } from 'src/app/interfaces/Students';
   templateUrl: './student-form-dialog.component.html',
   styleUrls: ['./student-form-dialog.component.scss'],
 })
-export class StudentFormDialogComponent {
+export class StudentFormDialogComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<StudentFormDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) private updateableStudent: Student
+    @Inject(MAT_DIALOG_DATA) public updateableStudent: Student
   ) {}
 
-  isEditing: boolean = false;
+  isEditing: boolean = !!this.updateableStudent;
 
   nameControl = new FormControl<string | null>('', [Validators.required]);
   lastNameControl = new FormControl<string | null>('', [Validators.required]);
@@ -27,6 +27,14 @@ export class StudentFormDialogComponent {
     lastName: this.lastNameControl,
     registrationDate: this.registrationDateControl,
   });
+
+  ngOnInit(): void {
+    this.parseStudentToEdit();
+  }
+
+  private parseStudentToEdit(): void {
+    this.studentForm.patchValue(this.updateableStudent);
+  }
 
   onSubmit(): void {
     if (this.studentForm.valid) {

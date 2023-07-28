@@ -20,7 +20,7 @@ export class StudentsService {
     return randomNumber;
   }
 
-  getStudents(): Observable<Student[]> {
+  public getStudents(): Observable<Student[]> {
     return this.students$.asObservable();
   }
 
@@ -34,6 +34,19 @@ export class StudentsService {
         registrationDate: newStudent.registrationDate,
       },
     ]);
-    console.log(this.students$)
+  }
+
+  public editStudent(studentToUpdate: Student): void {
+    this.students$.next(
+      this.students$.getValue().map((student) => {
+        return student.id === studentToUpdate.id ? studentToUpdate : student;
+      })
+    );
+  }
+
+  public deleteStudent(studentId: number): void {
+    this.students$.next(
+      this.students$.getValue().filter((student) => student.id !== studentId)
+    );
   }
 }
