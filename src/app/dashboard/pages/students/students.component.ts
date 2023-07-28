@@ -18,10 +18,21 @@ export class StudentsComponent {
     private studentsService: StudentsService,
     private matDialog: MatDialog,
     private notificationService: NotificationService
-  ) {}
+  ) {
+    this.students$ = this.studentsService.getStudents();
+  }
 
   onAddNewStudent(): void {
-    this.matDialog.open(StudentFormDialogComponent);
+    this.matDialog
+      .open(StudentFormDialogComponent)
+      .afterClosed()
+      .subscribe({
+        next: (newStudent) => {
+          if (newStudent) {
+            this.studentsService.createStudent(newStudent);
+          }
+        },
+      });
   }
 
   onEditStudent(studentToEdit: Student): void {}

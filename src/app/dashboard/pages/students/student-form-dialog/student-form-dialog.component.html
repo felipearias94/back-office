@@ -6,7 +6,7 @@
   </mat-card-header>
 
   <mat-card-content>
-    <form class="container m-0" [formGroup]="userForm">
+    <form class="container m-0" [formGroup]="studentForm">
       <div class="row">
         <mat-form-field appearance="outline" class="w-100">
           <mat-label>Nombre</mat-label>
@@ -42,7 +42,6 @@
             [matDatepicker]="picker"
             [formControl]="registrationDateControl"
           />
-          <mat-hint>DD/MM/YYYY</mat-hint>
           <mat-datepicker-toggle
             matIconSuffix
             [for]="picker"
