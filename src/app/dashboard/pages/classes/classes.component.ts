@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ClassesService } from 'src/app/services/classes.service';
-import { NotificationService } from 'src/app/services/notification.service';
+import { ClassesService } from 'src/app/core/services/classes.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-classes',
@@ -9,7 +9,6 @@ import { NotificationService } from 'src/app/services/notification.service';
   styleUrls: ['./classes.component.scss'],
 })
 export class ClassesComponent {
-  
   constructor(
     private classesService: ClassesService,
     private matDialog: MatDialog,

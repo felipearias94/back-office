@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { CoursesService } from 'src/app/services/courses.service';
-import { NotificationService } from 'src/app/services/notification.service';
+import { CoursesService } from 'src/app/core/services/courses.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-courses',
@@ -10,7 +10,7 @@ import { NotificationService } from 'src/app/services/notification.service';
 })
 export class CoursesComponent {
   constructor(
-    private coursesService:CoursesService,
+    private coursesService: CoursesService,
     private matDialog: MatDialog,
     private notificationService: NotificationService
   ) {}

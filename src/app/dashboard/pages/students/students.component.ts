@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
-import { NotificationService } from 'src/app/services/notification.service';
-import { StudentsService } from 'src/app/services/students.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
+import { StudentsService } from 'src/app/core/services/students.service';
 import { StudentFormDialogComponent } from './student-form-dialog/student-form-dialog.component';
 import { Student } from 'src/app/interfaces/Students';
 
