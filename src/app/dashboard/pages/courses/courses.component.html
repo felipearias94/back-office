@@ -5,3 +5,12 @@
     (onClick)="onAddNewCourse()"
   ></app-bo-button>
 </div>
+<div class="title d-flex">
+  <mat-icon>school</mat-icon>
+  <h3>Alumnos registrados</h3>
+</div>
+<app-courses-table
+  [dataSource]="(courses$ | async) || []"
+  (deleteCourse)="onDeleteCourse($event)"
+  (editCourse)="onEditCourse($event)"
+></app-courses-table>
