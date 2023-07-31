@@ -6,6 +6,7 @@ import { ClassesComponent } from './pages/classes/classes.component';
 import { UserDetailsComponent } from './pages/users/user-details/user-details.component';
 import { UsersComponent } from './pages/users/users.component';
 import { HomeComponent } from './pages/home/home.component';
+import { StudentDetailsComponent } from './pages/students/student-details/student-details.component';
 
 const routes: Routes = [
   {
@@ -27,7 +28,10 @@ const routes: Routes = [
   },
   {
     path: 'students',
-    component: StudentsComponent,
+    children: [
+      { path: '', component: StudentsComponent },
+      { path: ':id', component: StudentDetailsComponent },
+    ],
   },
   {
     path: 'courses',

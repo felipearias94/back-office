@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, map, take } from 'rxjs';
 import { Student } from '../interfaces/Students';
 
 @Injectable({
@@ -22,6 +22,13 @@ export class StudentsService {
 
   public getStudents(): Observable<Student[]> {
     return this.students$.asObservable();
+  }
+
+  public getStudentById(studentId: number): Observable<Student | undefined> {
+    return this.students$.pipe(
+      take(1),
+      map((students) => students.find((student) => student.id === studentId))
+    );
   }
 
   public createStudent(newStudent: Student): void {
