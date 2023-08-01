@@ -22,6 +22,10 @@ export class ClassDetailsComponent {
     this.loadClassById(this.classId);
   }
 
+  getCourseName(): string | undefined {
+    return this.courseService.getCourseNameById(this.selectedClass?.courseId);
+  }
+
   loadClassById(classId: number) {
     this.classService.getLectureById(classId).subscribe({
       next: (leture) => {

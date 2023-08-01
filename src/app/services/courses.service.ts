@@ -34,6 +34,11 @@ export class CoursesService {
     );
   }
 
+  getCourseNameById(courseId: number | undefined): string | undefined {
+    return this.courses$.getValue().find((course) => course.id === courseId)
+      ?.courseName;
+  }
+
   createCourse(newCourse: Course) {
     this.courses$.next([
       ...this.courses$.value,

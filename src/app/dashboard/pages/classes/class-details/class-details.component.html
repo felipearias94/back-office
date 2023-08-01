@@ -7,7 +7,7 @@
     </mat-card-header>
     <mat-card-content class="card-content p-4">
       <h5>Id curso:</h5>
-      <p>{{ selectedClass?.courseId }}</p>
+      <p>{{ getCourseName() }}</p>
       <h5>Duración:</h5>
       <p>{{ selectedClass?.durationInMin | duration }}</p>
     </mat-card-content>
