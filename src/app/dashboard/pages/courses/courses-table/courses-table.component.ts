@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Course } from 'src/app/services/courses.service';
+import { Course } from 'src/app/interfaces/Courses';
 
 @Component({
   selector: 'app-courses-table',
@@ -8,12 +8,14 @@ import { Course } from 'src/app/services/courses.service';
 })
 export class CoursesTableComponent {
   @Input() dataSource: Course[] = [];
-  @Output() deleteStudent = new EventEmitter<Course>();
-  @Output() editStudent = new EventEmitter<Course>();
+  @Output() deleteCourse = new EventEmitter<Course>();
+  @Output() editCourse = new EventEmitter<Course>();
+  
   displayedColumns: string[] = [
     'id',
-    'fullName',
-    'registrationDate',
+    'courseName',
+    'teacher',
+    'duration',
     'actions',
   ];
 }

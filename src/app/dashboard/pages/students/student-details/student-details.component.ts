@@ -11,12 +11,12 @@ import { StudentsService } from 'src/app/services/students.service';
 export class StudentDetailsComponent {
   studentId: number;
   selectedStudent: Student | undefined;
-  
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private studentService: StudentsService
   ) {
-    this.studentId = Number(this.activatedRoute.snapshot.params['id']);
+    this.studentId = Number(this.activatedRoute.snapshot.params['studentId']);
     this.loadUserById();
   }
 

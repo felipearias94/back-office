@@ -1,1 +1,19 @@
-<p>course-details works!</p>
+<app-back-button></app-back-button>
+<div class="d-flex w-100 mt-5 justify-content-center">
+  <mat-card class="w-50">
+    <mat-card-header class="align-items-center">
+      <div mat-card-avatar><mat-icon>person</mat-icon></div>
+      <mat-card-title>{{ selectedCourse?.courseName }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="card-content p-4">
+      <h5>Nombre curso:</h5>
+      <p>{{ selectedCourse?.courseName }}</p>
+      <h5>Apellido:</h5>
+      <p>{{ selectedCourse?.teacher }}</p>
+      <h5>Fecha de ingreso:</h5>
+      <p>{{ selectedCourse?.startDate | date }}</p>
+      <h5>Fecha de ingreso:</h5>
+      <p>{{ selectedCourse?.endDate | date }}</p>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -48,6 +48,5 @@ export class StudentFormDialogComponent implements OnInit {
       this.dialogRef.close(this.studentForm.value);
       return;
     }
-    this.studentForm.markAllAsTouched();
   }
 }

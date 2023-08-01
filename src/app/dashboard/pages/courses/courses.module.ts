@@ -6,12 +6,16 @@ import { CoursesService } from 'src/app/services/courses.service';
 import { CoursesTableComponent } from './courses-table/courses-table.component';
 import { CoursesFormDialogComponent } from './courses-form-dialog/courses-form-dialog.component';
 import { CourseDetailsComponent } from './course-details/course-details.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
-  declarations: [CoursesComponent, CoursesTableComponent, CoursesFormDialogComponent, CourseDetailsComponent],
-  imports: [CommonModule, SharedModule],
+  declarations: [
+    CoursesComponent,
+    CoursesTableComponent,
+    CoursesFormDialogComponent,
+    CourseDetailsComponent,
+  ],
+  imports: [CommonModule, SharedModule, RouterModule],
   providers: [CoursesService],
 })
-export class CoursesModule {
- 
-}
+export class CoursesModule {}
