@@ -1,1 +1,68 @@
-<p>classes-form-dialog works!</p>
+<mat-card class="form-card">
+  <mat-card-header class="pb-4">
+    <mat-card-title higherFont>{{
+      isEditing
+        ? "Editando a la clase " + updatableClass.className + " "
+        : "Crear nueva clase"
+    }}</mat-card-title>
+
+    <mat-card-subtitle>Campos con * son requeridos</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <form class="container m-0" [formGroup]="classForm">
+      <div class="row">
+        <mat-form-field appearance="outline">
+          <mat-label>Seleccione un curso...</mat-label>
+          <mat-select [formControl]="courseIdControl">
+            <ng-container *ngFor="let course of courses$ | async">
+              <mat-option value="{{ course.id }}">{{
+                course.courseName
+              }}</mat-option>
+            </ng-container>
+          </mat-select>
+          <mat-error *ngFor="let error of courseIdControl.errors | keyvalue">
+            {{ error | controlErrorMessage }}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Nombre clase</mat-label>
+          <input
+            [formControl]="classNameControl"
+            type="text"
+            matInput
+            placeholder="Nombre curso"
+            name="courseName"
+            value="classNameControl.value"
+          />
+          <mat-error *ngFor="let error of classNameControl.errors | keyvalue">
+            {{ error | controlErrorMessage }}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Duración de la clase</mat-label>
+          <input
+            matInput
+            type="number"
+            [formControl]="durationControl"
+            value="durationControl.value"
+          />
+          <mat-error *ngFor="let error of durationControl.errors | keyvalue">
+            {{ error | controlErrorMessage }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </form>
+  </mat-card-content>
+  <div mat-dialog-actions class="d-flex justify-content-end">
+    <button type="submit" mat-raised-button mat-dialog-close>Cancelar</button>
+    <button
+      type="submit"
+      mat-raised-button
+      color="primary"
+      (click)="onSubmit()"
+    >
+      {{ isEditing ? "Actualizar" : "Guardar" }}
+    </button>
+  </div>
+</mat-card>

@@ -69,9 +69,11 @@ export class CoursesComponent {
       })
       .afterClosed()
       .subscribe((confirmation) => {
-        if (confirmation) this.coursesService.deleteCourse(courseToDelete.id);
-        this.notificationService.showNotification(`
-      Se eliminó el curso ${courseToDelete.courseName}`);
+        if (confirmation) {
+          this.coursesService.deleteCourse(courseToDelete.id);
+          this.notificationService.showNotification(`
+        Se eliminó el curso ${courseToDelete.courseName}`);
+        }
       });
   }
 }

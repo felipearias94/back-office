@@ -24,6 +24,8 @@ import { NoDataComponent } from './components/no-data/no-data.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { DateDurationPipe } from './pipes/date-duration/date-duration.pipe';
+import { DurationPipe } from './pipes/duration/duration.pipe';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,7 @@ import { DateDurationPipe } from './pipes/date-duration/date-duration.pipe';
     ConfirmActionModalComponent,
     BackButtonComponent,
     NoDataComponent,
+    DurationPipe,
   ],
   imports: [
     CommonModule,
@@ -67,11 +70,13 @@ import { DateDurationPipe } from './pipes/date-duration/date-duration.pipe';
     MatSnackBarModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatSelectModule,
     // Directives-Pipes
     ControlErrorMessagePipe,
     FullNamePipe,
     HigherFontDirective,
     DateDurationPipe,
+    DurationPipe,
   ],
 })
 export class SharedModule {}

@@ -16,6 +16,5 @@ import { RouterModule } from '@angular/router';
     CourseDetailsComponent,
   ],
   imports: [CommonModule, SharedModule, RouterModule],
-  providers: [CoursesService],
 })
 export class CoursesModule {}
