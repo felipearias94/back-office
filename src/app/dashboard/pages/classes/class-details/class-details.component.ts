@@ -19,6 +19,7 @@ export class ClassDetailsComponent {
     private activatedRoute: ActivatedRoute
   ) {
     this.classId = Number(this.activatedRoute.snapshot.params['classId']);
+    this.loadClassById(this.classId);
   }
 
   loadClassById(classId: number) {
