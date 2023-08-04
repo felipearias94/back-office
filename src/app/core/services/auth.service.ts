@@ -42,10 +42,12 @@ export class AuthService {
       .subscribe({
         next: (response) => {
           if (response.length) {
-            this._authUser$.next(response[0]);
+            const authUser = response[0];
+            this._authUser$.next(authUser);
             this.router.navigate(['/dashboard']);
+            localStorage.setItem('token', authUser.token);
             this.notification.showNotification(
-              `Bienvenid@ ${response[0].name} ${response[0].lastName}`
+              `Bienvenid@ ${authUser.name} ${authUser.lastName}`
             );
           } else {
             this.notification.showNotification(

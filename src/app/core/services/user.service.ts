@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable, filter, map, mergeMap, take } from 'rxjs';
 import { baseUsersUrl } from 'src/app/shared/constants/urls';
 import { HttpClient } from '@angular/common/http';
 import { NotificationService } from './notification.service';
+import { generateRandomToken } from 'src/app/shared/constants/generate-token';
 
 @Injectable({
   providedIn: 'root',
@@ -47,7 +48,10 @@ export class UserService {
 
   public createUser(newUser: User): void {
     this.httpClient
-      .post<User>(baseUsersUrl, newUser)
+      .post<User>(baseUsersUrl, {
+        ...newUser,
+        token: generateRandomToken(),
+      })
       .pipe(
         mergeMap((userCreated) =>
           this._users$.pipe(
