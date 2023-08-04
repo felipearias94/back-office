@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { CoursesService } from 'src/app/core/services/courses.service';
 import { Class } from 'src/app/interfaces/Classes';
-import { CoursesService } from 'src/app/services/courses.service';
 
 @Component({
   selector: 'app-classes-table',

@@ -37,9 +37,6 @@ export class UsersComponent {
         next: (newUser: User) => {
           if (newUser) {
             this.userService.createUser(newUser);
-            this.notificationService.showNotification(
-              `Se creó correctamente al usuario: ${newUser.name} ${newUser.lastName}`
-            );
           }
         },
       });
@@ -51,8 +48,8 @@ export class UsersComponent {
       .afterClosed()
       .subscribe({
         next: (updatedUser: User) => {
-          this.userService.editUser(updatedUser);
           if (updatedUser) {
+            this.userService.editUser(updatedUser);
             this.notificationService.showNotification(
               `Se actualizó al usuario: ${updatedUser.name} ${updatedUser.lastName}`
             );
@@ -73,10 +70,7 @@ export class UsersComponent {
       .afterClosed()
       .subscribe((confirmation) => {
         if (confirmation) {
-          this.userService.deleteUser(userToDelete.id);
-          this.notificationService.showNotification(
-            `Se eliminó al usuario: ${userToDelete.name} ${userToDelete.lastName}`
-          );
+          this.userService.deleteUser(userToDelete);
         }
       });
   }

@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ClassesService } from 'src/app/core/services/classes.service';
+import { CoursesService } from 'src/app/core/services/courses.service';
 import { Class } from 'src/app/interfaces/Classes';
-import { ClassesService } from 'src/app/services/classes.service';
-import { CoursesService } from 'src/app/services/courses.service';
+
 
 @Component({
   selector: 'app-class-details',

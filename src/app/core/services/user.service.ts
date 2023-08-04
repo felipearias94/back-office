@@ -60,19 +60,23 @@ export class UserService {
       .subscribe({
         next: (updatedArray) => {
           this._users$.next(updatedArray);
+          this.notificationService.showNotification(
+            `Se creó correctamente al usuario: ${newUser.name} ${newUser.lastName}`
+          );
         },
       });
   }
 
   public editUser(userToUpdate: User): void {
-    this._users$.next(
-      this._users$.getValue().map((user: User) => {
-        return user.id === userToUpdate.id ? userToUpdate : user;
-      })
-    );
+    this.httpClient
+      .put(`${this.usersUrl}/${userToUpdate.id}`, userToUpdate)
+      .subscribe({
+        next: () => this.loadUsers(),
+      });
   }
 
-  public deleteUser(userId: number): void {
+  public deleteUser(userToDelete: User): void {
+    const userId = userToDelete.id;
     this.httpClient
       .delete(`${this.usersUrl}/${userId}`)
       .pipe(
@@ -88,6 +92,9 @@ export class UserService {
       .subscribe({
         next: (updatedArray) => {
           this._users$.next(updatedArray);
+          this.notificationService.showNotification(
+            `Se eliminó al usuario: ${userToDelete.name} ${userToDelete.lastName}`
+          );
         },
       });
   }
