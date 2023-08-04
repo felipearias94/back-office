@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { User } from '../../interfaces/User';
-import { BehaviorSubject, Observable, filter, map, mergeMap, take } from 'rxjs';
-import { baseUsersUrl } from 'src/app/shared/constants/urls';
+import { BehaviorSubject, Observable, map, mergeMap, take } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { NotificationService } from './notification.service';
 import { generateRandomToken } from 'src/app/shared/constants/generate-token';
+import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
   providedIn: 'root',
@@ -20,9 +20,11 @@ export class UserService {
     private notificationService: NotificationService
   ) {}
 
+  private baseUsersUrl = environment.baseApiUrl + '/users/';
+
   public loadUsers() {
     this._isLoading$.next(true);
-    this.httpClient.get<User[]>(baseUsersUrl).subscribe({
+    this.httpClient.get<User[]>(this.baseUsersUrl).subscribe({
       next: (response) => {
         this._users$.next(response);
       },
@@ -48,7 +50,7 @@ export class UserService {
 
   public createUser(newUser: User): void {
     this.httpClient
-      .post<User>(baseUsersUrl, {
+      .post<User>(this.baseUsersUrl, {
         ...newUser,
         token: generateRandomToken(),
       })
@@ -72,7 +74,7 @@ export class UserService {
 
   public editUser(userToUpdate: User): void {
     this.httpClient
-      .put(`${baseUsersUrl}${userToUpdate.id}`, userToUpdate)
+      .put(`${this.baseUsersUrl}${userToUpdate.id}`, userToUpdate)
       .subscribe({
         next: () => this.loadUsers(),
       });
@@ -81,7 +83,7 @@ export class UserService {
   public deleteUser(userToDelete: User): void {
     const userId = userToDelete.id;
     this.httpClient
-      .delete(`${baseUsersUrl}${userId}`)
+      .delete(`${this.baseUsersUrl}${userId}`)
       .pipe(
         mergeMap((responseUserDelete) =>
           this.users$.pipe(

@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable, map, take } from 'rxjs';
 import { User } from 'src/app/interfaces/User';
 import { NotificationService } from './notification.service';
 import { HttpClient } from '@angular/common/http';
-import { baseUrl, baseUsersUrl } from 'src/app/shared/constants/urls';
+import { environment } from 'src/environments/environment.prod';
 
 export interface UserCredentials {
   email: string | null;
@@ -26,7 +26,7 @@ export class AuthService {
 
   isAuthenticated(): Observable<boolean> {
     return this.httpClient
-      .get<User[]>(baseUsersUrl, {
+      .get<User[]>(environment.baseApiUrl, {
         params: {
           token: localStorage.getItem('token') || '',
         },
@@ -40,7 +40,7 @@ export class AuthService {
 
   public login(payload: UserCredentials): void {
     this.httpClient
-      .get<User[]>(baseUsersUrl, {
+      .get<User[]>(environment.baseApiUrl, {
         params: {
           email: payload.email || '',
           password: payload.password || '',
