@@ -1,72 +1,121 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map, take } from 'rxjs';
+import { BehaviorSubject, Observable, map, mergeMap, take } from 'rxjs';
 import { Class } from 'src/app/interfaces/Classes';
+import { NotificationService } from './notification.service';
+import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ClassesService {
-  private generatedIDs = new Set<number>();
+  private classesUrl = environment.baseApiUrl + 'classes/';
+  private _isLoading$ = new BehaviorSubject<boolean>(false);
+  public isLoading$ = this._isLoading$.asObservable();
+  private _classes$ = new BehaviorSubject<Class[]>([]);
+  public classes$ = this._classes$.asObservable();
 
-  private classes$ = new BehaviorSubject<Class[]>([
-    {
-      id: 1,
-      courseId: 1,
-      className: 'Componentes y módulos',
-      durationInMin: 120,
-    },
-  ]);
-  public _classes = this.classes$.asObservable();
+  constructor(
+    private httpClient: HttpClient,
+    private notificationService: NotificationService
+  ) {}
 
-  constructor() {
-    this.classes$
-      .getValue()
-      .forEach((lecture) => this.generatedIDs.add(lecture.id));
+  loadClasses(): void {
+    this._isLoading$.next(true);
+    this.httpClient.get<Class[]>(this.classesUrl).subscribe({
+      next: (response) => {
+        this._classes$.next(response);
+      },
+      error: () => {
+        this.notificationService.showNotification('Error de conección');
+      },
+      complete: () => {
+        this._isLoading$.next(false);
+      },
+    });
   }
 
   getLectures(): Observable<Class[]> {
-    return this._classes;
+    return this.classes$;
   }
 
   getLectureById(lectureId: number): Observable<Class | undefined> {
-    return this._classes.pipe(
+    return this._classes$.pipe(
       take(1),
       map((lectures) => lectures.find((lecture) => lecture.id === lectureId))
     );
   }
 
   createLecture(newLecture: Class): void {
-    this.classes$.next([
-      ...this.classes$.value,
-      {
-        id: this.generateUniqueID(),
-        courseId: newLecture.courseId,
-        className: newLecture.className,
-        durationInMin: newLecture.durationInMin,
-      },
-    ]);
+    this.httpClient
+      .post<Class>(this.classesUrl, newLecture)
+      .pipe(
+        mergeMap((studentCreated) =>
+          this._classes$.pipe(
+            take(1),
+            map((currentArray) => [...currentArray, studentCreated])
+          )
+        )
+      )
+      .subscribe({
+        next: (updatedArray) => {
+          this._classes$.next(updatedArray);
+          this.notificationService.showNotification(
+            `Se creó correctamente la clase: ${newLecture.className}`
+          );
+        },
+        error: () => {
+          this.notificationService.showNotification(
+            'Ocurrio un error al crear la clase'
+          );
+        },
+      });
   }
 
   editLecture(lectureToUpate: Class): void {
-    this.classes$.next(
-      this.classes$.getValue().map((lecture: Class) => {
-        return lecture.id === lectureToUpate.id ? lectureToUpate : lecture;
-      })
-    );
+    this.httpClient
+      .put(`${this.classesUrl}${lectureToUpate.id}`, lectureToUpate)
+      .subscribe({
+        next: () => {
+          this.loadClasses();
+          this.notificationService.showNotification(
+            `Se actualizó la clase: ${lectureToUpate.className}`
+          );
+        },
+        error: () => {
+          this.notificationService.showNotification(
+            'Ocurrio un error al editar la clase'
+          );
+        },
+      });
   }
 
-  deleteClass(lectureId: number): void {
-    this.classes$.next(
-      this.classes$.getValue().filter((lecture) => lecture.id !== lectureId)
-    );
-  }
-
-  private generateUniqueID(): number {
-    const randomNumber = Math.floor(Math.random() * 1000);
-    if (this.generatedIDs.has(randomNumber)) {
-      return this.generateUniqueID();
-    }
-    this.generatedIDs.add(randomNumber);
-    return randomNumber;
+  deleteClass(lectureToDelete: Class): void {
+    const lectureId = lectureToDelete.id;
+    this.httpClient
+      .delete(`${this.classesUrl}${lectureId}`)
+      .pipe(
+        mergeMap((responseUserDelete) =>
+          this.classes$.pipe(
+            take(1),
+            map((currentArray) =>
+              currentArray.filter((user) => user.id !== lectureId)
+            )
+          )
+        )
+      )
+      .subscribe({
+        next: (updatedArray) => {
+          this._classes$.next(updatedArray);
+          this.notificationService.showNotification(
+            `Se eliminó la clase: ${lectureToDelete.className}`
+          );
+        },
+        error: () => {
+          this.notificationService.showNotification(
+            'Ocurrio un error al eliminar la clase'
+          );
+        },
+      });
   }
 }

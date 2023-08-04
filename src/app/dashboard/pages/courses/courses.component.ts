@@ -20,9 +20,9 @@ export class CoursesComponent {
 
   constructor(
     private coursesService: CoursesService,
-    private matDialog: MatDialog,
-    private notificationService: NotificationService
+    private matDialog: MatDialog
   ) {
+    this.coursesService.loadCourses();
     this.courses$ = this.coursesService.getCourses();
   }
 
@@ -34,9 +34,6 @@ export class CoursesComponent {
         next: (newCourse: Course) => {
           if (newCourse) {
             this.coursesService.createCourse(newCourse);
-            this.notificationService.showNotification(
-              `Se creó correctamente el curso: ${newCourse.courseName}`
-            );
           }
         },
       });
@@ -48,11 +45,8 @@ export class CoursesComponent {
       .afterClosed()
       .subscribe({
         next: (updatedCourse: Course) => {
-          this.coursesService.editCourse(updatedCourse);
           if (updatedCourse) {
-            this.notificationService.showNotification(
-              `Se actualizó correctamente el curso ${updatedCourse.courseName}`
-            );
+            this.coursesService.editCourse(updatedCourse);
           }
         },
       });
@@ -70,9 +64,7 @@ export class CoursesComponent {
       .afterClosed()
       .subscribe((confirmation) => {
         if (confirmation) {
-          this.coursesService.deleteCourse(courseToDelete.id);
-          this.notificationService.showNotification(`
-        Se eliminó el curso ${courseToDelete.courseName}`);
+          this.coursesService.deleteCourse(courseToDelete);
         }
       });
   }

@@ -1,77 +1,127 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map, take } from 'rxjs';
+import { BehaviorSubject, Observable, map, mergeMap, take } from 'rxjs';
 import { Course } from 'src/app/interfaces/Courses';
+import { environment } from 'src/environments/environment.prod';
+import { NotificationService } from './notification.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CoursesService {
   private generatedIDs = new Set<number>();
-  private courses$ = new BehaviorSubject<Course[]>([
-    {
-      id: 1,
-      courseName: 'Desarrollo web - Angular',
-      teacher: 'Josue Baez',
-      startDate: new Date('06/13/2023'),
-      endDate: new Date('08/15/2023'),
-    },
-  ]);
+  private _courses$ = new BehaviorSubject<Course[]>([]);
+  private courses$ = this._courses$.asObservable();
+  private _isLoading$ = new BehaviorSubject<boolean>(false);
+  public isLoading$ = this._isLoading$.asObservable();
+  private coursesUrl = environment.baseApiUrl + 'courses/';
 
-  constructor() {
-    this.courses$
-      .getValue()
-      .forEach((course) => this.generatedIDs.add(course.id));
+  constructor(
+    private httpClient: HttpClient,
+    private notificationService: NotificationService
+  ) {}
+
+  public loadCourses(): void {
+    this._isLoading$.next(true);
+    this.httpClient.get<Course[]>(this.coursesUrl).subscribe({
+      next: (response) => {
+        this._courses$.next(response);
+      },
+      error: () => {
+        this.notificationService.showNotification('Error de conección');
+      },
+      complete: () => {
+        this._isLoading$.next(false);
+      },
+    });
   }
 
-  getCourses(): Observable<Course[]> {
-    return this.courses$.asObservable();
+  public getCourses(): Observable<Course[]> {
+    return this.courses$;
   }
 
-  getCourseById(courseId: number): Observable<Course | undefined> {
-    return this.courses$.pipe(
+  public getCourseById(courseId: number): Observable<Course | undefined> {
+    return this._courses$.pipe(
       take(1),
       map((courses) => courses.find((course) => course.id === courseId))
     );
   }
 
-  getCourseNameById(courseId: number | undefined): string | undefined {
-    return this.courses$.getValue().find((course) => course.id === courseId)
+  public getCourseNameById(courseId: number | undefined): string | undefined {
+    return this._courses$.getValue().find((course) => course.id === courseId)
       ?.courseName;
   }
 
-  createCourse(newCourse: Course) {
-    this.courses$.next([
-      ...this.courses$.value,
-      {
-        id: this.generateUniqueID(),
-        courseName: newCourse.courseName,
-        teacher: newCourse.teacher,
-        endDate: newCourse.endDate,
-        startDate: newCourse.startDate,
-      },
-    ]);
+  public createCourse(newCourse: Course) {
+    this.httpClient
+      .post<Course>(this.coursesUrl, newCourse)
+      .pipe(
+        mergeMap((studentCreated) =>
+          this._courses$.pipe(
+            take(1),
+            map((currentArray) => [...currentArray, studentCreated])
+          )
+        )
+      )
+      .subscribe({
+        next: (updatedArray) => {
+          this._courses$.next(updatedArray);
+          this.notificationService.showNotification(
+            `Se creó correctamente el curso: ${newCourse.courseName}`
+          );
+        },
+        error: () => {
+          this.notificationService.showNotification(
+            'Ocurrio un error al crear el curso'
+          );
+        },
+      });
   }
 
   public editCourse(courseToUpdate: Course): void {
-    this.courses$.next(
-      this.courses$.getValue().map((course: Course) => {
-        return course.id === courseToUpdate.id ? courseToUpdate : course;
-      })
-    );
+    this.httpClient
+      .put(`${this.coursesUrl}${courseToUpdate.id}`, courseToUpdate)
+      .subscribe({
+        next: () => {
+          this.loadCourses();
+          this.notificationService.showNotification(
+            `Se actualizó al curso: ${courseToUpdate.courseName}`
+          );
+        },
+        error: () => {
+          this.notificationService.showNotification(
+            'Ocurrio un error al editar el curso'
+          );
+        },
+      });
   }
 
-  public deleteCourse(courseId: number): void {
-    this.courses$.next(
-      this.courses$.getValue().filter((course) => course.id !== courseId)
-    );
-  }
-
-  private generateUniqueID(): number {
-    const randomNumber = Math.floor(Math.random() * 1000);
-    if (this.generatedIDs.has(randomNumber)) {
-      return this.generateUniqueID();
-    }
-    this.generatedIDs.add(randomNumber);
-    return randomNumber;
+  public deleteCourse(courseToDelete: Course): void {
+    const courseId = courseToDelete.id;
+    this.httpClient
+      .delete(`${this.coursesUrl}${courseId}`)
+      .pipe(
+        mergeMap((responseUserDelete) =>
+          this.courses$.pipe(
+            take(1),
+            map((currentArray) =>
+              currentArray.filter((user) => user.id !== courseId)
+            )
+          )
+        )
+      )
+      .subscribe({
+        next: (updatedArray) => {
+          this._courses$.next(updatedArray);
+          this.notificationService.showNotification(
+            `Se eliminó al curso: ${courseToDelete.courseName}`
+          );
+        },
+        error: () => {
+          this.notificationService.showNotification(
+            'Ocurrio un error al eliminar al curso'
+          );
+        },
+      });
   }
 }

@@ -20,9 +20,9 @@ export class ClassesComponent {
 
   constructor(
     private classesService: ClassesService,
-    private matDialog: MatDialog,
-    private notificationService: NotificationService
+    private matDialog: MatDialog
   ) {
+    this.classesService.loadClasses();
     this.classes$ = this.classesService.getLectures();
   }
 
@@ -34,9 +34,6 @@ export class ClassesComponent {
         next: (newClass: Class) => {
           if (newClass) {
             this.classesService.createLecture(newClass);
-            this.notificationService.showNotification(
-              `Se creó correctamente la clase ${newClass.className}`
-            );
           }
         },
       });
@@ -48,10 +45,8 @@ export class ClassesComponent {
       .afterClosed()
       .subscribe({
         next: (updatableClass: Class) => {
-          this.classesService.editLecture(updatableClass);
           if (updatableClass) {
-            this.notificationService.showNotification(`
-          Se actualizó correctamente la clase ${updatableClass.className}`);
+            this.classesService.editLecture(updatableClass);
           }
         },
       });
@@ -69,10 +64,7 @@ export class ClassesComponent {
       .afterClosed()
       .subscribe((confirmation) => {
         if (confirmation) {
-          this.classesService.deleteClass(classToDelete.id);
-          this.notificationService.showNotification(
-            `Se eliminó a la clase ${classToDelete.className}`
-          );
+          this.classesService.deleteClass(classToDelete);
         }
       });
   }

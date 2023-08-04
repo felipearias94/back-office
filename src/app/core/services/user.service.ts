@@ -21,8 +21,7 @@ export class UserService {
     private notificationService: NotificationService
   ) {}
 
-
-  public loadUsers() {
+  public loadUsers(): void {
     this._isLoading$.next(true);
     this.httpClient.get<User[]>(this.baseUsersUrl).subscribe({
       next: (response) => {
