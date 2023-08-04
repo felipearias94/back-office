@@ -40,7 +40,7 @@ export class ClassesService {
   }
 
   getLectureById(lectureId: number): Observable<Class | undefined> {
-    return this._classes$.pipe(
+    return this.classes$.pipe(
       take(1),
       map((lectures) => lectures.find((lecture) => lecture.id === lectureId))
     );
