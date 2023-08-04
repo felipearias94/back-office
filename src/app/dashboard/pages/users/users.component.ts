@@ -50,9 +50,6 @@ export class UsersComponent {
         next: (updatedUser: User) => {
           if (updatedUser) {
             this.userService.editUser(updatedUser);
-            this.notificationService.showNotification(
-              `Se actualizó al usuario: ${updatedUser.name} ${updatedUser.lastName}`
-            );
           }
         },
       });

@@ -15,6 +15,7 @@ export interface UserCredentials {
   providedIn: 'root',
 })
 export class AuthService {
+  usersUrl = environment.baseApiUrl + 'users';
   private _authUser$ = new BehaviorSubject<User | null>(null);
   public authUser$ = this._authUser$.asObservable();
 
@@ -26,7 +27,7 @@ export class AuthService {
 
   isAuthenticated(): Observable<boolean> {
     return this.httpClient
-      .get<User[]>(environment.baseApiUrl, {
+      .get<User[]>(this.usersUrl, {
         params: {
           token: localStorage.getItem('token') || '',
         },
@@ -40,7 +41,7 @@ export class AuthService {
 
   public login(payload: UserCredentials): void {
     this.httpClient
-      .get<User[]>(environment.baseApiUrl, {
+      .get<User[]>(this.usersUrl, {
         params: {
           email: payload.email || '',
           password: payload.password || '',

@@ -14,13 +14,13 @@ export class UserService {
   private users$ = this._users$.asObservable();
   private _isLoading$ = new BehaviorSubject<boolean>(false);
   public isLoading$ = this._isLoading$.asObservable();
+  private baseUsersUrl = environment.baseApiUrl + 'users/';
 
   constructor(
     private httpClient: HttpClient,
     private notificationService: NotificationService
   ) {}
 
-  private baseUsersUrl = environment.baseApiUrl + '/users/';
 
   public loadUsers() {
     this._isLoading$.next(true);
@@ -69,6 +69,11 @@ export class UserService {
             `Se creó correctamente al usuario: ${newUser.name} ${newUser.lastName}`
           );
         },
+        error: () => {
+          this.notificationService.showNotification(
+            'Ocurrio un error al crear al usuario'
+          );
+        },
       });
   }
 
@@ -76,7 +81,17 @@ export class UserService {
     this.httpClient
       .put(`${this.baseUsersUrl}${userToUpdate.id}`, userToUpdate)
       .subscribe({
-        next: () => this.loadUsers(),
+        next: () => {
+          this.loadUsers();
+          this.notificationService.showNotification(
+            `Se actualizó al usuario: ${userToUpdate.name} ${userToUpdate.lastName}`
+          );
+        },
+        error: () => {
+          this.notificationService.showNotification(
+            'Ocurrio un error al editar al usuario'
+          );
+        },
       });
   }
 
@@ -99,6 +114,11 @@ export class UserService {
           this._users$.next(updatedArray);
           this.notificationService.showNotification(
             `Se eliminó al usuario: ${userToDelete.name} ${userToDelete.lastName}`
+          );
+        },
+        error: () => {
+          this.notificationService.showNotification(
+            'Ocurrio un error al eliminar al usuario'
           );
         },
       });
