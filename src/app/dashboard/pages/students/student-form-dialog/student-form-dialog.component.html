@@ -1,12 +1,19 @@
 <mat-card class="form-card">
   <mat-card-header class="pb-4">
-    <mat-card-title higherFont>Nuevo alumno</mat-card-title>
+    <mat-card-title higherFont>{{
+      isEditing
+        ? "Editando a " +
+          updateableStudent.name +
+          " " +
+          updateableStudent.lastName
+        : "Crear nuevo alumno"
+    }}</mat-card-title>
 
     <mat-card-subtitle>Campos con * son requeridos</mat-card-subtitle>
   </mat-card-header>
 
   <mat-card-content>
-    <form class="container m-0" [formGroup]="userForm">
+    <form class="container m-0" [formGroup]="studentForm">
       <div class="row">
         <mat-form-field appearance="outline" class="w-100">
           <mat-label>Nombre</mat-label>
@@ -42,7 +49,6 @@
             [matDatepicker]="picker"
             [formControl]="registrationDateControl"
           />
-          <mat-hint>DD/MM/YYYY</mat-hint>
           <mat-datepicker-toggle
             matIconSuffix
             [for]="picker"
@@ -52,10 +58,15 @@
       </div>
     </form>
   </mat-card-content>
+  <div mat-dialog-actions class="d-flex justify-content-end">
+    <button type="submit" mat-raised-button mat-dialog-close>Cancelar</button>
+    <button
+      type="submit"
+      mat-raised-button
+      color="primary"
+      (click)="onSubmit()"
+    >
+      {{ isEditing ? "Actualizar" : "Guardar" }}
+    </button>
+  </div>
 </mat-card>
-<div mat-dialog-actions class="d-flex justify-content-end">
-  <button type="submit" mat-raised-button mat-dialog-close>Cancelar</button>
-  <button type="submit" mat-raised-button color="primary" (click)="onSubmit()">
-    {{ isEditing ? "Actualizar" : "Guardar" }}
-  </button>
-</div>

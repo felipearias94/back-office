@@ -10,6 +10,7 @@ import { StudentsModule } from './pages/students/students.module';
 import { CoursesModule } from './pages/courses/courses.module';
 import { ClassesModule } from './pages/classes/classes.module';
 import { DashboardRoutingModule } from './dashboard-routing.module';
+import { CoursesService } from '../services/courses.service';
 
 @NgModule({
   declarations: [DashboardComponent],
@@ -24,6 +25,7 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
     CoursesModule,
     SharedModule,
   ],
+  providers: [CoursesService],
   exports: [DashboardComponent],
 })
 export class DashboardModule {}

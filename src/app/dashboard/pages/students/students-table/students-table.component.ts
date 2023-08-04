@@ -10,4 +10,5 @@ export class StudentsTableComponent {
   @Input() dataSource: Student[] = [];
   @Output() deleteStudent = new EventEmitter<Student>();
   @Output() editStudent = new EventEmitter<Student>();
+  displayedColumns: string[] = ['id', 'fullName', 'registrationDate', 'actions'];
 }

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/core/services/user.service';
+import { User } from 'src/app/interfaces/User';
 
 @Component({
   selector: 'app-user-details',
@@ -9,6 +10,8 @@ import { UserService } from 'src/app/core/services/user.service';
 })
 export class UserDetailsComponent {
   userId: number;
+  selectedUser: User | undefined;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private userService: UserService
@@ -20,7 +23,7 @@ export class UserDetailsComponent {
   loadUserById(): void {
     this.userService.getUserById(this.userId).subscribe({
       next: (user) => {
-        console.log(user);
+        this.selectedUser = user;
       },
     });
   }

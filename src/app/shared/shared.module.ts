@@ -23,6 +23,9 @@ import { BackButtonComponent } from './components/back-button/back-button.compon
 import { NoDataComponent } from './components/no-data/no-data.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { DateDurationPipe } from './pipes/date-duration/date-duration.pipe';
+import { DurationPipe } from './pipes/duration/duration.pipe';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -30,10 +33,12 @@ import { MatNativeDateModule } from '@angular/material/core';
     ControlErrorMessagePipe,
     HigherFontDirective,
     FullNamePipe,
+    DateDurationPipe,
     BoButtonComponent,
     ConfirmActionModalComponent,
     BackButtonComponent,
     NoDataComponent,
+    DurationPipe,
   ],
   imports: [
     CommonModule,
@@ -65,10 +70,13 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatSnackBarModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatSelectModule,
     // Directives-Pipes
     ControlErrorMessagePipe,
     FullNamePipe,
     HigherFontDirective,
+    DateDurationPipe,
+    DurationPipe,
   ],
 })
 export class SharedModule {}

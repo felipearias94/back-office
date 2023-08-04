@@ -6,6 +6,9 @@ import { ClassesComponent } from './pages/classes/classes.component';
 import { UserDetailsComponent } from './pages/users/user-details/user-details.component';
 import { UsersComponent } from './pages/users/users.component';
 import { HomeComponent } from './pages/home/home.component';
+import { StudentDetailsComponent } from './pages/students/student-details/student-details.component';
+import { CourseDetailsComponent } from './pages/courses/course-details/course-details.component';
+import { ClassDetailsComponent } from './pages/classes/class-details/class-details.component';
 
 const routes: Routes = [
   {
@@ -27,15 +30,43 @@ const routes: Routes = [
   },
   {
     path: 'students',
-    component: StudentsComponent,
+    children: [
+      {
+        path: '',
+        component: StudentsComponent,
+      },
+
+      {
+        path: ':studentId',
+        component: StudentDetailsComponent,
+      },
+    ],
   },
   {
     path: 'courses',
-    component: CoursesComponent,
+    children: [
+      {
+        path: '',
+        component: CoursesComponent,
+      },
+      {
+        path: ':courseId',
+        component: CourseDetailsComponent,
+      },
+    ],
   },
   {
     path: 'classes',
-    component: ClassesComponent,
+    children: [
+      {
+        path: '',
+        component: ClassesComponent,
+      },
+      {
+        path: ':classId',
+        component: ClassDetailsComponent,
+      },
+    ],
   },
   {
     path: '**',
