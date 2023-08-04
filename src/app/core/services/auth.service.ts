@@ -25,10 +25,17 @@ export class AuthService {
   ) {}
 
   isAuthenticated(): Observable<boolean> {
-    return this._authUser$.pipe(
-      take(1),
-      map((user) => !!user)
-    );
+    return this.httpClient
+      .get<User[]>(baseUsersUrl, {
+        params: {
+          token: localStorage.getItem('token') || '',
+        },
+      })
+      .pipe(
+        map((usersResponse) => {
+          return !!usersResponse.length;
+        })
+      );
   }
 
   public login(payload: UserCredentials): void {
