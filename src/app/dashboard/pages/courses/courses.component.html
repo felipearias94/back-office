@@ -1,0 +1,16 @@
+<div class="mb-5">
+  <app-bo-button
+    iconName="add"
+    label="Nuevo curso"
+    (onClick)="onAddNewCourse()"
+  ></app-bo-button>
+</div>
+<div class="title d-flex">
+  <mat-icon>menu_book</mat-icon>
+  <h3>Cursos registrados</h3>
+</div>
+<app-courses-table
+  [dataSource]="(courses$ | async) || []"
+  (deleteCourse)="onDeleteCourse($event)"
+  (editCourse)="onEditCourse($event)"
+></app-courses-table>

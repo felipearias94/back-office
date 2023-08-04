@@ -1,0 +1,62 @@
+<div *ngIf="dataSource.length == 0"><app-no-data></app-no-data></div>
+<table
+  *ngIf="dataSource.length > 0"
+  mat-table
+  [dataSource]="dataSource"
+  class="mat-elevation-z8"
+>
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef higherFont>Id</th>
+    <td mat-cell *matCellDef="let course">{{ course.id }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="courseName">
+    <th mat-header-cell *matHeaderCellDef higherFont>Nombre curso</th>
+    <td mat-cell *matCellDef="let course">{{ course.courseName }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="teacher">
+    <th mat-header-cell *matHeaderCellDef higherFont>Profesor</th>
+    <td mat-cell *matCellDef="let course">{{ course.teacher }}</td>
+  </ng-container>
+  
+  <ng-container matColumnDef="duration">
+    <th mat-header-cell *matHeaderCellDef higherFont>Duración</th>
+    <td mat-cell *matCellDef="let course">{{ course | dateDuration }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef higherFont>Acciones</th>
+    <td mat-cell *matCellDef="let course">
+      <button
+        mat-icon-button
+        color="primary"
+        aria-label="Example icon button with a heart icon"
+        [routerLink]="course.id"
+      >
+        <mat-icon
+          ><span class="material-symbols-outlined"> visibility </span></mat-icon
+        >
+      </button>
+      <button
+        mat-icon-button
+        color="black"
+        aria-label="Example icon button with a heart icon"
+        (click)="editCourse.emit(course)"
+      >
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        color="warn"
+        aria-label="Example icon button with a heart icon"
+        (click)="deleteCourse.emit(course)"
+      >
+        <mat-icon>delete_outline</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>

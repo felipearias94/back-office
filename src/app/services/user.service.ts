@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { User } from '../interfaces/User';
-import { BehaviorSubject, Observable, filter } from 'rxjs';
+import { BehaviorSubject, Observable, filter, map, take } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -30,6 +30,13 @@ export class UserService {
 
   public getUsers(): Observable<User[]> {
     return this.users.asObservable();
+  }
+
+  public getUserById(id: number): Observable<User | undefined> {
+    return this.users.pipe(
+      take(1),
+      map((users) => users.find((user) => user.id === id))
+    );
   }
 
   public createUser(newUser: User): void {

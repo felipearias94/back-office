@@ -1,0 +1,66 @@
+<div *ngIf="dataSource.length == 0"><app-no-data></app-no-data></div>
+<table
+  *ngIf="dataSource.length > 0"
+  mat-table
+  [dataSource]="dataSource"
+  class="mat-elevation-z8"
+>
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef higherFont>Id</th>
+    <td mat-cell *matCellDef="let class">{{ class.id }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="className">
+    <th mat-header-cell *matHeaderCellDef higherFont>Nombre clase</th>
+    <td mat-cell *matCellDef="let class">{{ class.className }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="courseName">
+    <th mat-header-cell *matHeaderCellDef higherFont>Curso</th>
+    <td mat-cell *matCellDef="let class">
+      {{ getCourseName(class.courseId) }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="durationInMin">
+    <th mat-header-cell *matHeaderCellDef higherFont>Duración en Min.</th>
+    <td mat-cell *matCellDef="let course">
+      {{ course.durationInMin | duration }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef higherFont>Acciones</th>
+    <td mat-cell *matCellDef="let course">
+      <button
+        mat-icon-button
+        color="primary"
+        aria-label="Example icon button with a heart icon"
+        [routerLink]="course.id"
+      >
+        <mat-icon
+          ><span class="material-symbols-outlined"> visibility </span></mat-icon
+        >
+      </button>
+      <button
+        mat-icon-button
+        color="black"
+        aria-label="Example icon button with a heart icon"
+        (click)="editClass.emit(course)"
+      >
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        color="warn"
+        aria-label="Example icon button with a heart icon"
+        (click)="deleteClass.emit(course)"
+      >
+        <mat-icon>delete_outline</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>

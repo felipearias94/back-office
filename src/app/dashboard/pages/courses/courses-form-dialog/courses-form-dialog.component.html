@@ -1,0 +1,85 @@
+<mat-card class="form-card">
+  <mat-card-header class="pb-4">
+    <mat-card-title higherFont>{{
+      isEditing
+        ? "Editando al curso " + updateableCourse.courseName + " "
+        : "Crear nuevo curso"
+    }}</mat-card-title>
+
+    <mat-card-subtitle>Campos con * son requeridos</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <form class="container m-0" [formGroup]="courseForm">
+      <div class="row">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Nombre curso</mat-label>
+          <input
+            [formControl]="courseNameControl"
+            type="text"
+            matInput
+            placeholder="Nombre curso"
+            name="courseName"
+            value="courseNameControl.value"
+          />
+          <mat-error *ngFor="let error of courseNameControl.errors | keyvalue">
+            {{ error | controlErrorMessage }}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Profesor</mat-label>
+          <input
+            [formControl]="teacherControl"
+            type="text"
+            matInput
+            placeholder="Nombre profesor"
+            name="teacher"
+            value="teacherControl.value"
+          />
+          <mat-error *ngFor="let error of teacherControl.errors | keyvalue">
+            {{ error | controlErrorMessage }}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-50">
+          <mat-label>Fecha comienzo</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            [formControl]="startDateControl"
+            value="startDateControl.value"
+          />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-50">
+          <mat-label>Fecha fin</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker1"
+            [formControl]="endDateControl"
+            value="endDateControl.value"
+          />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker1"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </form>
+  </mat-card-content>
+  <div mat-dialog-actions class="d-flex justify-content-end">
+    <button type="submit" mat-raised-button mat-dialog-close>Cancelar</button>
+    <button
+      type="submit"
+      mat-raised-button
+      color="primary"
+      (click)="onSubmit()"
+    >
+      {{ isEditing ? "Actualizar" : "Guardar" }}
+    </button>
+  </div>
+</mat-card>

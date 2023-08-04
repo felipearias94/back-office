@@ -49,9 +49,11 @@ export class UsersComponent {
       .subscribe({
         next: (updatedUser: User) => {
           this.userService.editUser(updatedUser);
-          this.notificationService.showNotification(
-            `Se actualizó al usuario: ${updatedUser.name} ${updatedUser.lastName}`
-          );
+          if (updatedUser) {
+            this.notificationService.showNotification(
+              `Se actualizó al usuario: ${updatedUser.name} ${updatedUser.lastName}`
+            );
+          }
         },
       });
   }
