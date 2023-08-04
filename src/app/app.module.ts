@@ -8,6 +8,7 @@ import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import eslocale from '@angular/common/locales/es-AR';
 import { registerLocaleData } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 registerLocaleData(eslocale);
 
@@ -20,6 +21,7 @@ registerLocaleData(eslocale);
     AuthModule,
     DashboardModule,
     SharedModule,
+    HttpClientModule,
   ],
   providers: [
     {

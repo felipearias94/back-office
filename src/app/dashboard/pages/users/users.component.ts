@@ -17,12 +17,15 @@ import { Observable } from 'rxjs';
 })
 export class UsersComponent {
   users$: Observable<User[]>;
+  isLoading$: Observable<boolean>;
 
   constructor(
     private userService: UserService,
     private matDialog: MatDialog,
     private notificationService: NotificationService
   ) {
+    this.isLoading$ = this.userService.isLoading$;
+    this.userService.loadUsers();
     this.users$ = this.userService.getUsers();
   }
 

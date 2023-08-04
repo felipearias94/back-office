@@ -1,75 +1,94 @@
 import { Injectable } from '@angular/core';
 import { User } from '../interfaces/User';
-import { BehaviorSubject, Observable, filter, map, take } from 'rxjs';
+import { BehaviorSubject, Observable, filter, map, mergeMap, take } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { baseUrl } from '../shared/constants/urls';
+import { NotificationService } from './notification.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  private generatedIDs = new Set<number>();
-  private users = new BehaviorSubject<User[]>([
-    {
-      id: 1,
-      name: 'Felipe',
-      lastName: 'Arias',
-      email: 'felipe.arias@gmail.com',
-      password: '123123123',
-    },
-    {
-      id: 2,
-      name: 'Juan',
-      lastName: 'Perez',
-      email: 'jperez@gmail.com',
-      password: '123123123',
-    },
-  ]);
+  private usersUrl = baseUrl + 'users';
+  private _users$ = new BehaviorSubject<User[]>([]);
+  private users$ = this._users$.asObservable();
+  private _isLoading$ = new BehaviorSubject<boolean>(false);
+  public isLoading$ = this._isLoading$.asObservable();
 
-  constructor() {
-    this.users.getValue().forEach((user) => this.generatedIDs.add(user.id));
+  constructor(
+    private httpClient: HttpClient,
+    private notificationService: NotificationService
+  ) {}
+
+  public loadUsers() {
+    this._isLoading$.next(true);
+    this.httpClient.get<User[]>(this.usersUrl).subscribe({
+      next: (response) => {
+        this._users$.next(response);
+      },
+      error: () => {
+        this.notificationService.showNotification('Error de conección');
+      },
+      complete: () => {
+        this._isLoading$.next(false);
+      },
+    });
   }
 
   public getUsers(): Observable<User[]> {
-    return this.users.asObservable();
+    return this.users$;
   }
 
   public getUserById(id: number): Observable<User | undefined> {
-    return this.users.pipe(
+    return this._users$.pipe(
       take(1),
       map((users) => users.find((user) => user.id === id))
     );
   }
 
   public createUser(newUser: User): void {
-    this.users.next([
-      ...this.users.value,
-      {
-        id: this.generateUniqueID(),
-        name: newUser.name,
-        lastName: newUser.lastName,
-        email: newUser.email,
-        password: newUser.password,
-      },
-    ]);
+    this.httpClient
+      .post<User>(this.usersUrl, newUser)
+      .pipe(
+        mergeMap((userCreated) =>
+          this._users$.pipe(
+            take(1),
+            map((currentArray) => [...currentArray, userCreated])
+          )
+        )
+      )
+      .subscribe({
+        next: (updatedArray) => {
+          this._users$.next(updatedArray);
+        },
+      });
   }
 
   public editUser(userToUpdate: User): void {
-    this.users.next(
-      this.users.getValue().map((user: User) => {
+    this._users$.next(
+      this._users$.getValue().map((user: User) => {
         return user.id === userToUpdate.id ? userToUpdate : user;
       })
     );
   }
 
   public deleteUser(userId: number): void {
-    this.users.next(this.users.getValue().filter((user) => user.id !== userId));
-  }
-
-  private generateUniqueID(): number {
-    const randomNumber = Math.floor(Math.random() * 1000);
-    if (this.generatedIDs.has(randomNumber)) {
-      return this.generateUniqueID();
-    }
-    this.generatedIDs.add(randomNumber);
-    return randomNumber;
+    this.httpClient
+      .delete(`${this.usersUrl}/${userId}`)
+      .pipe(
+        mergeMap((responseUserDelete) =>
+          this.users$.pipe(
+            take(1),
+            map((currentArray) =>
+              currentArray.filter((user) => user.id !== userId)
+            )
+          )
+        )
+      )
+      .subscribe({
+        next: (updatedArray) => {
+          this._users$.next(updatedArray);
+        },
+      });
   }
 }
