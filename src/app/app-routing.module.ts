@@ -10,10 +10,12 @@ import { RegisterComponent } from './auth/pages/register/register.component';
 import { StudentsComponent } from './dashboard/pages/students/students.component';
 import { CoursesComponent } from './dashboard/pages/courses/courses.component';
 import { ClassesComponent } from './dashboard/pages/classes/classes.component';
+import { authGuard } from './core/guards/auth.guard';
 
 const routes: Routes = [
   {
     path: 'dashboard',
+    canActivate: [authGuard],
     component: DashboardComponent,
     loadChildren: () =>
       import('./dashboard/dashboard.module').then((m) => m.DashboardModule),

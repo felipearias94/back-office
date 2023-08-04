@@ -6,8 +6,8 @@ import {
   ConfirmActionModalComponent,
   ConfirmationType,
 } from 'src/app/shared/components/confirm-action-modal/confirm-action-modal.component';
-import { UserService } from 'src/app/services/user.service';
-import { NotificationService } from 'src/app/services/notification.service';
+import { UserService } from 'src/app/core/services/user.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
 import { Observable } from 'rxjs';
 
 @Component({

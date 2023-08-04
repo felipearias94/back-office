@@ -2,13 +2,13 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { Class } from 'src/app/interfaces/Classes';
-import { ClassesService } from 'src/app/services/classes.service';
-import { NotificationService } from 'src/app/services/notification.service';
 import { ClassesFormDialogComponent } from './classes-form-dialog/classes-form-dialog.component';
 import {
   ConfirmActionModalComponent,
   ConfirmationType,
 } from 'src/app/shared/components/confirm-action-modal/confirm-action-modal.component';
+import { ClassesService } from 'src/app/core/services/classes.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-classes',

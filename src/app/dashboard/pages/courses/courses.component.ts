@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { CoursesService } from 'src/app/core/services/courses.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
 import { Observable } from 'rxjs';
 import { Course } from 'src/app/interfaces/Courses';
-import { CoursesService } from 'src/app/services/courses.service';
-import { NotificationService } from 'src/app/services/notification.service';
 import { CoursesFormDialogComponent } from './courses-form-dialog/courses-form-dialog.component';
 import {
   ConfirmActionModalComponent,

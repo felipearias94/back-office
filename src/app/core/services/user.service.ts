@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { User } from '../interfaces/User';
+import { User } from '../../interfaces/User';
 import { BehaviorSubject, Observable, filter, map, mergeMap, take } from 'rxjs';
+import { baseUrl } from 'src/app/shared/constants/urls';
 import { HttpClient } from '@angular/common/http';
-import { baseUrl } from '../shared/constants/urls';
 import { NotificationService } from './notification.service';
 
 @Injectable({
