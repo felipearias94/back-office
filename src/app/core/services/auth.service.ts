@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, map, take } from 'rxjs';
 import { User } from 'src/app/interfaces/User';
 import { NotificationService } from './notification.service';
+import { HttpClient } from '@angular/common/http';
+import { baseUrl, baseUsersUrl } from 'src/app/shared/constants/urls';
 
 export interface UserCredentials {
   email: string | null;
@@ -13,35 +15,44 @@ export interface UserCredentials {
   providedIn: 'root',
 })
 export class AuthService {
-  private authUser$ = new BehaviorSubject<User | null>(null);
-  public _authUser$ = this.authUser$.asObservable();
+  private _authUser$ = new BehaviorSubject<User | null>(null);
+  public authUser$ = this._authUser$.asObservable();
 
   constructor(
     private router: Router,
+    private httpClient: HttpClient,
     private notification: NotificationService
   ) {}
 
   isAuthenticated(): Observable<boolean> {
-    return this.authUser$.pipe(
+    return this._authUser$.pipe(
       take(1),
       map((user) => !!user)
     );
   }
 
   public login(payload: UserCredentials): void {
-    const user: User = {
-      id: 1,
-      name: 'Felipe',
-      lastName: 'Arias',
-      email: 'felipe.arias@gmail.com',
-      password: '123123123',
-    };
-    if (payload.email === user.email && payload.password === user.password) {
-      this.authUser$.next(user);
-      this.router.navigate(['/dashboard/home']);
-    }
-    else {
-      this.notification.showNotification('Email y/o contraseña invalida.');
-    }
+    this.httpClient
+      .get<User[]>(baseUsersUrl, {
+        params: {
+          email: payload.email || '',
+          password: payload.password || '',
+        },
+      })
+      .subscribe({
+        next: (response) => {
+          if (response.length) {
+            this._authUser$.next(response[0]);
+            this.router.navigate(['/dashboard']);
+            this.notification.showNotification(
+              `Bienvenid@ ${response[0].name} ${response[0].lastName}`
+            );
+          } else {
+            this.notification.showNotification(
+              `Usuario y/o contraseña incorrecto`
+            );
+          }
+        },
+      });
   }
 }

@@ -11,7 +11,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 export class HeaderComponent {
   userData;
   constructor(private router: Router, private authService: AuthService) {
-    this.userData = this.authService._authUser$;
+    this.userData = this.authService.authUser$;
   }
 
   logout(): void {

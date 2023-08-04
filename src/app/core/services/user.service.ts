@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { User } from '../../interfaces/User';
 import { BehaviorSubject, Observable, filter, map, mergeMap, take } from 'rxjs';
-import { baseUrl } from 'src/app/shared/constants/urls';
+import { baseUsersUrl } from 'src/app/shared/constants/urls';
 import { HttpClient } from '@angular/common/http';
 import { NotificationService } from './notification.service';
 
@@ -9,7 +9,6 @@ import { NotificationService } from './notification.service';
   providedIn: 'root',
 })
 export class UserService {
-  private usersUrl = baseUrl + 'users';
   private _users$ = new BehaviorSubject<User[]>([]);
   private users$ = this._users$.asObservable();
   private _isLoading$ = new BehaviorSubject<boolean>(false);
@@ -22,7 +21,7 @@ export class UserService {
 
   public loadUsers() {
     this._isLoading$.next(true);
-    this.httpClient.get<User[]>(this.usersUrl).subscribe({
+    this.httpClient.get<User[]>(baseUsersUrl).subscribe({
       next: (response) => {
         this._users$.next(response);
       },
@@ -48,7 +47,7 @@ export class UserService {
 
   public createUser(newUser: User): void {
     this.httpClient
-      .post<User>(this.usersUrl, newUser)
+      .post<User>(baseUsersUrl, newUser)
       .pipe(
         mergeMap((userCreated) =>
           this._users$.pipe(
@@ -69,7 +68,7 @@ export class UserService {
 
   public editUser(userToUpdate: User): void {
     this.httpClient
-      .put(`${this.usersUrl}/${userToUpdate.id}`, userToUpdate)
+      .put(`${baseUsersUrl}${userToUpdate.id}`, userToUpdate)
       .subscribe({
         next: () => this.loadUsers(),
       });
@@ -78,7 +77,7 @@ export class UserService {
   public deleteUser(userToDelete: User): void {
     const userId = userToDelete.id;
     this.httpClient
-      .delete(`${this.usersUrl}/${userId}`)
+      .delete(`${baseUsersUrl}${userId}`)
       .pipe(
         mergeMap((responseUserDelete) =>
           this.users$.pipe(

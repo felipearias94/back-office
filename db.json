@@ -3,9 +3,16 @@
     {
       "name": "Felipe",
       "lastName": "Arias",
-      "email": "fefe@fe.com",
-      "password": "jiyuk,riyukkir",
+      "email": "felipearias.dev@gmail.com",
+      "password": "123456789",
       "id": 5
+    },
+    {
+      "name": "felipe",
+      "lastName": "Arias",
+      "email": "felari94@gmail.com",
+      "password": "123456",
+      "id": 6
     }
   ],
   "students": [],
