@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ClassesService } from 'src/app/core/services/classes.service';
+import { CoursesService } from 'src/app/core/services/courses.service';
 import { Class } from 'src/app/interfaces/Classes';
-import { ClassesService } from 'src/app/services/classes.service';
-import { CoursesService } from 'src/app/services/courses.service';
 
 @Component({
   selector: 'app-class-details',
@@ -18,12 +18,16 @@ export class ClassDetailsComponent {
     private classService: ClassesService,
     private activatedRoute: ActivatedRoute
   ) {
+    this.courseService.loadCourses();
+    this.classService.loadClasses();
     this.classId = Number(this.activatedRoute.snapshot.params['classId']);
     this.loadClassById(this.classId);
   }
 
   getCourseName(): string | undefined {
-    return this.courseService.getCourseNameById(this.selectedClass?.courseId);
+    return this.courseService.getCourseNameById(
+      Number(this.selectedClass?.courseId)
+    );
   }
 
   loadClassById(classId: number) {

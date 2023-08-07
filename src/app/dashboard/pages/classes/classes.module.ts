@@ -6,7 +6,6 @@ import { ClassesFormDialogComponent } from './classes-form-dialog/classes-form-d
 import { ClassesTableComponent } from './classes-table/classes-table.component';
 import { ClassDetailsComponent } from './class-details/class-details.component';
 import { RouterModule } from '@angular/router';
-import { CoursesService } from 'src/app/services/courses.service';
 
 @NgModule({
   declarations: [

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { StudentsService } from 'src/app/core/services/students.service';
 import { Student } from 'src/app/interfaces/Students';
-import { StudentsService } from 'src/app/services/students.service';
 
 @Component({
   selector: 'app-student-details',

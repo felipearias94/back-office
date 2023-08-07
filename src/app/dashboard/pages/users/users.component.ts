@@ -6,8 +6,8 @@ import {
   ConfirmActionModalComponent,
   ConfirmationType,
 } from 'src/app/shared/components/confirm-action-modal/confirm-action-modal.component';
-import { UserService } from 'src/app/services/user.service';
-import { NotificationService } from 'src/app/services/notification.service';
+import { UserService } from 'src/app/core/services/user.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -17,12 +17,15 @@ import { Observable } from 'rxjs';
 })
 export class UsersComponent {
   users$: Observable<User[]>;
+  isLoading$: Observable<boolean>;
 
   constructor(
     private userService: UserService,
     private matDialog: MatDialog,
     private notificationService: NotificationService
   ) {
+    this.isLoading$ = this.userService.isLoading$;
+    this.userService.loadUsers();
     this.users$ = this.userService.getUsers();
   }
 
@@ -34,9 +37,6 @@ export class UsersComponent {
         next: (newUser: User) => {
           if (newUser) {
             this.userService.createUser(newUser);
-            this.notificationService.showNotification(
-              `Se creó correctamente al usuario: ${newUser.name} ${newUser.lastName}`
-            );
           }
         },
       });
@@ -48,11 +48,8 @@ export class UsersComponent {
       .afterClosed()
       .subscribe({
         next: (updatedUser: User) => {
-          this.userService.editUser(updatedUser);
           if (updatedUser) {
-            this.notificationService.showNotification(
-              `Se actualizó al usuario: ${updatedUser.name} ${updatedUser.lastName}`
-            );
+            this.userService.editUser(updatedUser);
           }
         },
       });
@@ -70,10 +67,7 @@ export class UsersComponent {
       .afterClosed()
       .subscribe((confirmation) => {
         if (confirmation) {
-          this.userService.deleteUser(userToDelete.id);
-          this.notificationService.showNotification(
-            `Se eliminó al usuario: ${userToDelete.name} ${userToDelete.lastName}`
-          );
+          this.userService.deleteUser(userToDelete);
         }
       });
   }

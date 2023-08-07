@@ -26,6 +26,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { DateDurationPipe } from './pipes/date-duration/date-duration.pipe';
 import { DurationPipe } from './pipes/duration/duration.pipe';
 import { MatSelectModule } from '@angular/material/select';
+import { SpinnerComponent } from './components/spinner/spinner.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,7 @@ import { MatSelectModule } from '@angular/material/select';
     BackButtonComponent,
     NoDataComponent,
     DurationPipe,
+    SpinnerComponent,
   ],
   imports: [
     CommonModule,
@@ -50,6 +53,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatCardModule,
     MatSnackBarModule,
     MatListModule,
+    MatProgressSpinnerModule,
   ],
   exports: [
     // Components
@@ -58,6 +62,7 @@ import { MatSelectModule } from '@angular/material/select';
     ConfirmActionModalComponent,
     BackButtonComponent,
     NoDataComponent,
+    SpinnerComponent,
     // Modules
     MatIconModule,
     MatButtonModule,

@@ -2,9 +2,9 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
+import { CoursesService } from 'src/app/core/services/courses.service';
 import { Class, ClassForm } from 'src/app/interfaces/Classes';
 import { Course } from 'src/app/interfaces/Courses';
-import { CoursesService } from 'src/app/services/courses.service';
 import { numberRangeValidator } from 'src/app/shared/validators/number-range-validator';
 
 @Component({

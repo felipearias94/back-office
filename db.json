@@ -1,0 +1,64 @@
+{
+  "users": [
+    {
+      "name": "Felipe",
+      "lastName": "Arias",
+      "email": "felipe.arias@gmail.com",
+      "password": "123456789",
+      "id": 5
+    },
+    {
+      "name": "felipe",
+      "lastName": "Arias",
+      "email": "felari94@gmail.com",
+      "password": "123456",
+      "id": 6
+    },
+    {
+      "name": "dfgn",
+      "lastName": "sfg",
+      "email": "felari94@gmail.com",
+      "password": "123456789",
+      "token": "Aw6tGAlG7xtSbvckfbU6LOqtr2HZoDzO7GjBhOraRhSIiUmxd5Cg103g9QCdCeO3",
+      "id": 7
+    }
+  ],
+  "students": [
+    {
+      "name": "felipe",
+      "lastName": "dfdh",
+      "registrationDate": "2023-08-04T21:57:37.926Z",
+      "id": 1
+    }
+  ],
+  "courses": [
+    {
+      "courseName": "Desarrollo web - Angular",
+      "teacher": "Yo",
+      "startDate": "2023-08-04T22:08:43.685Z",
+      "endDate": "2023-11-30T03:00:00.000Z",
+      "id": 1
+    },
+    {
+      "courseName": "React JS",
+      "teacher": "Pepe Argento",
+      "startDate": "2023-05-01T03:00:00.000Z",
+      "endDate": "2023-08-04T22:38:04.925Z",
+      "id": 2
+    }
+  ],
+  "classes": [
+    {
+      "className": "Componentes",
+      "courseId": "1",
+      "durationInMin": 120,
+      "id": 1
+    },
+    {
+      "className": "useEffect()",
+      "courseId": "2",
+      "durationInMin": 100,
+      "id": 2
+    }
+  ]
+}

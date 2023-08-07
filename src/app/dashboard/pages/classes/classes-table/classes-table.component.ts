@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { CoursesService } from 'src/app/core/services/courses.service';
 import { Class } from 'src/app/interfaces/Classes';
-import { CoursesService } from 'src/app/services/courses.service';
 
 @Component({
   selector: 'app-classes-table',
@@ -8,7 +8,9 @@ import { CoursesService } from 'src/app/services/courses.service';
   styleUrls: ['./classes-table.component.scss'],
 })
 export class ClassesTableComponent {
-  constructor(private courseService: CoursesService) {}
+  constructor(private courseService: CoursesService) {
+    this.courseService.loadCourses();
+  }
   @Input() dataSource: Class[] = [];
   @Output() deleteClass = new EventEmitter<Class>();
   @Output() editClass = new EventEmitter<Class>();
@@ -22,6 +24,6 @@ export class ClassesTableComponent {
   ];
 
   getCourseName(courseId: number): string | undefined {
-    return this.courseService.getCourseNameById(courseId);
+    return this.courseService.getCourseNameById(Number(courseId));
   }
 }

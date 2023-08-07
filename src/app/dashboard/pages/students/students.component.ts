@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
-import { NotificationService } from 'src/app/services/notification.service';
-import { StudentsService } from 'src/app/services/students.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
+import { StudentsService } from 'src/app/core/services/students.service';
 import { StudentFormDialogComponent } from './student-form-dialog/student-form-dialog.component';
 import { Student } from 'src/app/interfaces/Students';
 import {
@@ -20,9 +20,9 @@ export class StudentsComponent {
 
   constructor(
     private studentsService: StudentsService,
-    private matDialog: MatDialog,
-    private notificationService: NotificationService
+    private matDialog: MatDialog
   ) {
+    this.studentsService.loadStudents();
     this.students$ = this.studentsService.getStudents();
   }
 
@@ -34,9 +34,6 @@ export class StudentsComponent {
         next: (newStudent) => {
           if (newStudent) {
             this.studentsService.createStudent(newStudent);
-            this.notificationService.showNotification(
-              `Se creó correctamente al alumno: ${newStudent.name} ${newStudent.lastName}`
-            );
           }
         },
       });
@@ -48,11 +45,8 @@ export class StudentsComponent {
       .afterClosed()
       .subscribe({
         next: (updatedStudent: Student) => {
-          this.studentsService.editStudent(updatedStudent);
           if (updatedStudent) {
-            this.notificationService.showNotification(
-              `Se actualizó al estudiante: ${updatedStudent.name} ${updatedStudent.lastName}`
-            );
+            this.studentsService.editStudent(updatedStudent);
           }
         },
       });
@@ -70,10 +64,7 @@ export class StudentsComponent {
       .afterClosed()
       .subscribe((confirmation) => {
         if (confirmation) {
-          this.studentsService.deleteStudent(studentToDelete.id);
-          this.notificationService.showNotification(
-            `Se eliminó al usuario: ${studentToDelete.name} ${studentToDelete.lastName}`
-          );
+          this.studentsService.deleteStudent(studentToDelete);
         }
       });
   }
