@@ -3,24 +3,10 @@
     {
       "name": "Felipe",
       "lastName": "Arias",
-      "email": "felipe.arias@gmail.com",
-      "password": "123456789",
-      "id": 5
-    },
-    {
-      "name": "felipe",
-      "lastName": "Arias",
       "email": "felari94@gmail.com",
       "password": "123456",
-      "id": 6
-    },
-    {
-      "name": "dfgn",
-      "lastName": "sfg",
-      "email": "felari94@gmail.com",
-      "password": "123456789",
-      "token": "Aw6tGAlG7xtSbvckfbU6LOqtr2HZoDzO7GjBhOraRhSIiUmxd5Cg103g9QCdCeO3",
-      "id": 7
+      "token": "us93eBORHKGHJGF3voabys9AhnbSoxt9kG4HjU5mA5yNKd8a1kprVHTiZvDOnIV5",
+      "id": 1
     }
   ],
   "students": [

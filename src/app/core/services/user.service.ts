@@ -13,8 +13,10 @@ export class UserService {
   private _users$ = new BehaviorSubject<User[]>([]);
   private users$ = this._users$.asObservable();
   private _isLoading$ = new BehaviorSubject<boolean>(false);
-  public isLoading$ = this._isLoading$.asObservable();
   private baseUsersUrl = environment.baseApiUrl + 'users/';
+
+  public isLoading$ = this._isLoading$.asObservable();
+  public registeredUser: boolean = false;
 
   constructor(
     private httpClient: HttpClient,
@@ -67,6 +69,7 @@ export class UserService {
           this.notificationService.showNotification(
             `Se creó correctamente al usuario: ${newUser.name} ${newUser.lastName}`
           );
+          this.registeredUser = true;
         },
         error: () => {
           this.notificationService.showNotification(

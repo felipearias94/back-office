@@ -22,7 +22,6 @@ export class UsersComponent {
   constructor(
     private userService: UserService,
     private matDialog: MatDialog,
-    private notificationService: NotificationService
   ) {
     this.isLoading$ = this.userService.isLoading$;
     this.userService.loadUsers();
