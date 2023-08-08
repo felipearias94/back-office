@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable, map, mergeMap, take } from 'rxjs';
 import { Course } from 'src/app/interfaces/Courses';
 import { environment } from 'src/environments/environment.prod';
 import { NotificationService } from './notification.service';
+import { HandleErrorService } from './handle-error.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +19,8 @@ export class CoursesService {
 
   constructor(
     private httpClient: HttpClient,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private handleErrorService: HandleErrorService
   ) {}
 
   public loadCourses(): void {
@@ -27,8 +29,8 @@ export class CoursesService {
       next: (response) => {
         this._courses$.next(response);
       },
-      error: () => {
-        this.notificationService.showNotification('Error de conección');
+      error: (error) => {
+        this.handleErrorService.handleErrorResponse(error);
       },
       complete: () => {
         this._isLoading$.next(false);
@@ -70,10 +72,8 @@ export class CoursesService {
             `Se creó correctamente el curso: ${newCourse.courseName}`
           );
         },
-        error: () => {
-          this.notificationService.showNotification(
-            'Ocurrio un error al crear el curso'
-          );
+        error: (error) => {
+          this.handleErrorService.handleErrorResponse(error);
         },
       });
   }
@@ -88,10 +88,8 @@ export class CoursesService {
             `Se actualizó al curso: ${courseToUpdate.courseName}`
           );
         },
-        error: () => {
-          this.notificationService.showNotification(
-            'Ocurrio un error al editar el curso'
-          );
+        error: (error) => {
+          this.handleErrorService.handleErrorResponse(error);
         },
       });
   }
@@ -117,10 +115,8 @@ export class CoursesService {
             `Se eliminó al curso: ${courseToDelete.courseName}`
           );
         },
-        error: () => {
-          this.notificationService.showNotification(
-            'Ocurrio un error al eliminar al curso'
-          );
+        error: (error) => {
+          this.handleErrorService.handleErrorResponse(error);
         },
       });
   }

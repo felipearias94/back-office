@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { NotificationService } from './notification.service';
 import { generateRandomToken } from 'src/app/shared/constants/generate-token';
 import { environment } from 'src/environments/environment.prod';
+import { HandleErrorService } from './handle-error.service';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +21,8 @@ export class UserService {
 
   constructor(
     private httpClient: HttpClient,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private handleErrorService: HandleErrorService
   ) {}
 
   public loadUsers(): void {
@@ -29,8 +31,8 @@ export class UserService {
       next: (response) => {
         this._users$.next(response);
       },
-      error: () => {
-        this.notificationService.showNotification('Error de conección');
+      error: (error) => {
+        this.handleErrorService.handleErrorResponse(error);
       },
       complete: () => {
         this._isLoading$.next(false);
@@ -71,10 +73,8 @@ export class UserService {
           );
           this.registeredUser = true;
         },
-        error: () => {
-          this.notificationService.showNotification(
-            'Ocurrio un error al crear al usuario'
-          );
+        error: (error) => {
+          this.handleErrorService.handleErrorResponse(error);
         },
       });
   }
@@ -89,10 +89,8 @@ export class UserService {
             `Se actualizó al usuario: ${userToUpdate.name} ${userToUpdate.lastName}`
           );
         },
-        error: () => {
-          this.notificationService.showNotification(
-            'Ocurrio un error al editar al usuario'
-          );
+        error: (error) => {
+          this.handleErrorService.handleErrorResponse(error);
         },
       });
   }
@@ -118,10 +116,8 @@ export class UserService {
             `Se eliminó al usuario: ${userToDelete.name} ${userToDelete.lastName}`
           );
         },
-        error: () => {
-          this.notificationService.showNotification(
-            'Ocurrio un error al eliminar al usuario'
-          );
+        error: (error) => {
+          this.handleErrorService.handleErrorResponse(error);
         },
       });
   }

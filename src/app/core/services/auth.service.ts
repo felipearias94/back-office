@@ -5,6 +5,7 @@ import { User } from 'src/app/interfaces/User';
 import { NotificationService } from './notification.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment.prod';
+import { HandleErrorService } from './handle-error.service';
 
 export interface UserCredentials {
   email: string | null;
@@ -22,7 +23,8 @@ export class AuthService {
   constructor(
     private router: Router,
     private httpClient: HttpClient,
-    private notification: NotificationService
+    private notification: NotificationService,
+    private handleErrorService: HandleErrorService
   ) {}
 
   isAuthenticated(): Observable<boolean> {
@@ -62,6 +64,9 @@ export class AuthService {
               `Usuario y/o contraseña incorrecto`
             );
           }
+        },
+        error: (error) => {
+          this.handleErrorService.handleErrorResponse(error);
         },
       });
   }
