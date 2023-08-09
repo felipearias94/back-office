@@ -6,6 +6,8 @@ import { NotificationService } from './notification.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment.prod';
 import { HandleErrorService } from './handle-error.service';
+import { Store } from '@ngrx/store';
+import { AuthActions } from 'src/app/store/auth/auth.action';
 
 export interface UserCredentials {
   email: string | null;
@@ -17,11 +19,10 @@ export interface UserCredentials {
 })
 export class AuthService {
   usersUrl = environment.baseApiUrl + 'users';
-  private _authUser$ = new BehaviorSubject<User | null>(null);
-  public authUser$ = this._authUser$.asObservable();
 
   constructor(
     private router: Router,
+    private store: Store,
     private httpClient: HttpClient,
     private notification: NotificationService,
     private handleErrorService: HandleErrorService
@@ -53,7 +54,8 @@ export class AuthService {
         next: (response) => {
           if (response.length) {
             const authUser = response[0];
-            this._authUser$.next(authUser);
+            // this._authUser$.next(authUser);
+            this.store.dispatch(AuthActions.setAuthUser({ payload: authUser }));
             this.router.navigate(['/dashboard']);
             localStorage.setItem('token', authUser.token);
             this.notification.showNotification(
@@ -69,5 +71,11 @@ export class AuthService {
           this.handleErrorService.handleErrorResponse(error);
         },
       });
+  }
+
+  public logout(): void {
+    this.store.dispatch(AuthActions.setAuthUser({ payload: null }));
+    localStorage.clear();
+    this.router.navigate(['auth']);
   }
 }
