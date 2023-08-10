@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable, map, mergeMap, take } from 'rxjs';
 import { Class } from 'src/app/interfaces/Classes';
 import { NotificationService } from './notification.service';
 import { environment } from 'src/environments/environment.prod';
+import { HandleErrorService } from './handle-error.service';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +18,8 @@ export class ClassesService {
 
   constructor(
     private httpClient: HttpClient,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private handleErrorService: HandleErrorService
   ) {}
 
   loadClasses(): void {
@@ -26,8 +28,8 @@ export class ClassesService {
       next: (response) => {
         this._classes$.next(response);
       },
-      error: () => {
-        this.notificationService.showNotification('Error de conección');
+      error: (error) => {
+        this.handleErrorService.handleErrorResponse(error);
       },
       complete: () => {
         this._isLoading$.next(false);
@@ -64,10 +66,8 @@ export class ClassesService {
             `Se creó correctamente la clase: ${newLecture.className}`
           );
         },
-        error: () => {
-          this.notificationService.showNotification(
-            'Ocurrio un error al crear la clase'
-          );
+        error: (error) => {
+          this.handleErrorService.handleErrorResponse(error);
         },
       });
   }
@@ -82,10 +82,8 @@ export class ClassesService {
             `Se actualizó la clase: ${lectureToUpate.className}`
           );
         },
-        error: () => {
-          this.notificationService.showNotification(
-            'Ocurrio un error al editar la clase'
-          );
+        error: (error) => {
+          this.handleErrorService.handleErrorResponse(error);
         },
       });
   }
@@ -111,10 +109,8 @@ export class ClassesService {
             `Se eliminó la clase: ${lectureToDelete.className}`
           );
         },
-        error: () => {
-          this.notificationService.showNotification(
-            'Ocurrio un error al eliminar la clase'
-          );
+        error: (error) => {
+          this.handleErrorService.handleErrorResponse(error);
         },
       });
   }

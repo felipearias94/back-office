@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable, map, mergeMap, take } from 'rxjs';
 import { Student } from 'src/app/interfaces/Students';
 import { environment } from 'src/environments/environment.prod';
 import { NotificationService } from './notification.service';
+import { HandleErrorService } from './handle-error.service';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +18,8 @@ export class StudentsService {
 
   constructor(
     private httpClient: HttpClient,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private handleErrorService: HandleErrorService
   ) {}
 
   public loadStudents(): void {
@@ -26,8 +28,8 @@ export class StudentsService {
       next: (response) => {
         this._students$.next(response);
       },
-      error: () => {
-        this.notificationService.showNotification('Error de conección');
+      error: (error) => {
+        this.handleErrorService.handleErrorResponse(error);
       },
       complete: () => {
         this._isLoading$.next(false);
@@ -64,10 +66,8 @@ export class StudentsService {
             `Se creó correctamente al alumno: ${newStudent.name} ${newStudent.lastName}`
           );
         },
-        error: () => {
-          this.notificationService.showNotification(
-            'Ocurrio un error al crear al alumno'
-          );
+        error: (error) => {
+          this.handleErrorService.handleErrorResponse(error);
         },
       });
   }
@@ -111,10 +111,8 @@ export class StudentsService {
             `Se eliminó al usuario: ${student.name} ${student.lastName}`
           );
         },
-        error: () => {
-          this.notificationService.showNotification(
-            'Ocurrio un error al eliminar al usuario'
-          );
+        error: (error) => {
+          this.handleErrorService.handleErrorResponse(error);
         },
       });
   }

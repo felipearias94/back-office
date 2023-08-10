@@ -1,1 +1,81 @@
-<p>register works!</p>
+<h4>Registrar nuevo usuario</h4>
+<div>
+  <form class="container m-0" [formGroup]="registerForm">
+    <div class="row">
+      <mat-form-field appearance="outline" class="w-100 mt-3">
+        <mat-label>Nombre</mat-label>
+        <input
+          [formControl]="nameControl"
+          type="text"
+          matInput
+          placeholder="Nombre"
+          name="name"
+          value="nameControl.value"
+        />
+        <mat-error *ngFor="let error of nameControl.errors | keyvalue">
+          {{ error | controlErrorMessage }}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Apellido</mat-label>
+        <input
+          [formControl]="lastNameControl"
+          type="text"
+          matInput
+          placeholder="Apellido"
+          name="lastName"
+        />
+        <mat-error *ngFor="let error of lastNameControl.errors | keyvalue">
+          {{ error | controlErrorMessage }}
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="outline" class="col-6">
+        <mat-label>Email</mat-label>
+        <input
+          [formControl]="emailControl"
+          type="email"
+          matInput
+          placeholder="Email"
+          name="email"
+        />
+        <mat-error *ngFor="let error of emailControl.errors | keyvalue">
+          {{ error | controlErrorMessage }}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="col-6" appearance="outline">
+        <mat-label>Ingrese contraseña</mat-label>
+        <input
+          [formControl]="passwordControl"
+          matInput
+          [type]="hidePassword ? 'password' : 'text'"
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="hidePassword = !hidePassword"
+          [attr.aria-label]="'Ocultar contraseña'"
+          [attr.aria-pressed]="hidePassword"
+        >
+          <mat-icon>{{
+            hidePassword ? "visibility_off" : "visibility"
+          }}</mat-icon>
+        </button>
+        <mat-error *ngFor="let error of passwordControl.errors | keyvalue">
+          {{ error | controlErrorMessage }}
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="d-flex justify-content-end mt-4">
+      <button
+        mat-flat-button
+        color="primary"
+        type="submit"
+        (click)="registerNewUser()"
+      >
+        Registrar
+      </button>
+    </div>
+  </form>
+</div>

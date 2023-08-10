@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { NotificationService } from './notification.service';
 import { generateRandomToken } from 'src/app/shared/constants/generate-token';
 import { environment } from 'src/environments/environment.prod';
+import { HandleErrorService } from './handle-error.service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,12 +14,15 @@ export class UserService {
   private _users$ = new BehaviorSubject<User[]>([]);
   private users$ = this._users$.asObservable();
   private _isLoading$ = new BehaviorSubject<boolean>(false);
-  public isLoading$ = this._isLoading$.asObservable();
   private baseUsersUrl = environment.baseApiUrl + 'users/';
+
+  public isLoading$ = this._isLoading$.asObservable();
+  public registeredUser: boolean = false;
 
   constructor(
     private httpClient: HttpClient,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private handleErrorService: HandleErrorService
   ) {}
 
   public loadUsers(): void {
@@ -27,8 +31,8 @@ export class UserService {
       next: (response) => {
         this._users$.next(response);
       },
-      error: () => {
-        this.notificationService.showNotification('Error de conección');
+      error: (error) => {
+        this.handleErrorService.handleErrorResponse(error);
       },
       complete: () => {
         this._isLoading$.next(false);
@@ -67,11 +71,10 @@ export class UserService {
           this.notificationService.showNotification(
             `Se creó correctamente al usuario: ${newUser.name} ${newUser.lastName}`
           );
+          this.registeredUser = true;
         },
-        error: () => {
-          this.notificationService.showNotification(
-            'Ocurrio un error al crear al usuario'
-          );
+        error: (error) => {
+          this.handleErrorService.handleErrorResponse(error);
         },
       });
   }
@@ -86,10 +89,8 @@ export class UserService {
             `Se actualizó al usuario: ${userToUpdate.name} ${userToUpdate.lastName}`
           );
         },
-        error: () => {
-          this.notificationService.showNotification(
-            'Ocurrio un error al editar al usuario'
-          );
+        error: (error) => {
+          this.handleErrorService.handleErrorResponse(error);
         },
       });
   }
@@ -115,10 +116,8 @@ export class UserService {
             `Se eliminó al usuario: ${userToDelete.name} ${userToDelete.lastName}`
           );
         },
-        error: () => {
-          this.notificationService.showNotification(
-            'Ocurrio un error al eliminar al usuario'
-          );
+        error: (error) => {
+          this.handleErrorService.handleErrorResponse(error);
         },
       });
   }
