@@ -28,6 +28,8 @@ import { DurationPipe } from './pipes/duration/duration.pipe';
 import { MatSelectModule } from '@angular/material/select';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+
 
 @NgModule({
   declarations: [
@@ -54,6 +56,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatSnackBarModule,
     MatListModule,
     MatProgressSpinnerModule,
+    MatCheckboxModule,
   ],
   exports: [
     // Components
@@ -76,6 +79,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatDatepickerModule,
     MatNativeDateModule,
     MatSelectModule,
+    MatCheckboxModule,
     // Directives-Pipes
     ControlErrorMessagePipe,
     FullNamePipe,

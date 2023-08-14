@@ -14,6 +14,12 @@
       <p>{{ selectedCourse?.startDate | date }}</p>
       <h5>Fecha finalización:</h5>
       <p>{{ selectedCourse?.endDate | date }}</p>
+      <h5>Alumnos inscriptos: {{ studentsInCourse?.length }}</h5>
+      <ul>
+        <li *ngFor="let student of studentsInCourse">
+          {{ student | fullName }}
+        </li>
+      </ul>
     </mat-card-content>
   </mat-card>
 </div>

@@ -48,6 +48,15 @@ export class StudentsService {
     );
   }
 
+  public getStudentsByCourseId(courseId: number): Observable<Student[] | null> {
+    return this._students$.pipe(
+      take(1),
+      map((students) =>
+        students.filter((student) => student.coursesId.includes(courseId))
+      )
+    );
+  }
+
   public createStudent(newStudent: Student): void {
     this.httpClient
       .post<Student>(this.studentsUrl, newStudent)
