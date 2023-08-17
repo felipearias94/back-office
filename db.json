@@ -32,20 +32,12 @@
     {
       "name": "Maria",
       "lastName": "Gonzalez",
-      "coursesId": [
-        2,
-        3
-      ],
       "registrationDate": "2023-08-04T21:57:37.926Z",
       "id": 1
     },
     {
       "name": "Pedro",
       "lastName": "Picapiedra",
-      "coursesId": [
-        1,
-        2
-      ],
       "registrationDate": "2023-08-04T21:57:37.926Z",
       "id": 2
     },
@@ -109,6 +101,23 @@
       "courseId": "2",
       "durationInMin": 130,
       "id": 4
+    }
+  ],
+  "inscriptions": [
+    {
+      "id": 1,
+      "courseId": 2,
+      "studentsId": [1, 2]
+    },
+    {
+      "id": 2,
+      "courseId": 1,
+      "studentsId": [1, 2, 3, 4]
+    },
+    {
+      "id": 3,
+      "courseId": 3,
+      "studentsId": [1, 2, 3]
     }
   ]
 }

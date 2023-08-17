@@ -10,6 +10,7 @@ import { CoursesModule } from './pages/courses/courses.module';
 import { ClassesModule } from './pages/classes/classes.module';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { CoursesService } from '../core/services/courses.service';
+import { InscriptionsComponent } from './pages/inscriptions/inscriptions.component';
 
 @NgModule({
   declarations: [DashboardComponent],

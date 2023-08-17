@@ -8,6 +8,7 @@ import { CourseDetailsComponent } from './pages/courses/course-details/course-de
 import { ClassDetailsComponent } from './pages/classes/class-details/class-details.component';
 import { isAdminGuard } from '../core/guards/isAdmin.guard';
 import { hasRoleGuard } from '../core/guards/has-role.guard';
+import { InscriptionsComponent } from './pages/inscriptions/inscriptions.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,14 @@ const routes: Routes = [
     canActivate: [isAdminGuard],
     loadChildren: () =>
       import('./pages/users/users.module').then((m) => m.UsersModule),
+  },
+  {
+    path: 'inscriptions',
+    canActivate: [hasRoleGuard],
+    loadChildren: () =>
+      import('./pages/inscriptions/inscriptions.module').then(
+        (m) => m.InscriptionsModule
+      ),
   },
   {
     path: 'students',

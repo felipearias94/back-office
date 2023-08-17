@@ -4,6 +4,7 @@
     <mat-nav-list>
       <a routerLink="home" mat-list-item>Inicio</a>
       <a *ngIf="isAdmin$ | async" routerLink="users" mat-list-item>Usuarios</a>
+      <a routerLink="inscriptions" mat-list-item>Inscripciones</a>
       <a routerLink="students" mat-list-item>Alumnos</a>
       <a routerLink="courses" mat-list-item>Cursos</a>
       <a routerLink="classes" mat-list-item>Clases</a>
