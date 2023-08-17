@@ -18,17 +18,20 @@ export class UserFormDialogComponent implements OnInit {
     this.parseUserToEdit();
   }
 
+  roles: string[] = ['ADMIN', 'USER', 'GUEST'];
+
   //Form Controls
-  nameControl = new FormControl<string | null>('', [
+  nameControl = new FormControl<string | null>(null, [
     Validators.required,
     Validators.minLength(2),
   ]);
-  lastNameControl = new FormControl<string | null>('', [Validators.required]);
-  emailControl = new FormControl<string | null>('', [
+  lastNameControl = new FormControl<string | null>(null, [Validators.required]);
+  roleControl = new FormControl<string | null>(null, [Validators.required]);
+  emailControl = new FormControl<string | null>(null, [
     Validators.required,
     Validators.email,
   ]);
-  passwordControl = new FormControl<string | null>('', [
+  passwordControl = new FormControl<string | null>(null, [
     Validators.required,
     Validators.minLength(6),
   ]);
@@ -36,6 +39,7 @@ export class UserFormDialogComponent implements OnInit {
   userForm: FormGroup<UserForm> = new FormGroup({
     name: this.nameControl,
     lastName: this.lastNameControl,
+    role: this.roleControl,
     email: this.emailControl,
     password: this.passwordControl,
   });
@@ -52,6 +56,7 @@ export class UserFormDialogComponent implements OnInit {
       if (this.isEditing) {
         this.dialogRef.close({
           ...this.userForm.value,
+          token: this.updeteableUser.token,
           id: this.updeteableUser.id,
         });
         return;

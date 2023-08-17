@@ -3,7 +3,7 @@
     <span>Herramientas</span>
     <mat-nav-list>
       <a routerLink="home" mat-list-item>Inicio</a>
-      <a routerLink="users" mat-list-item>Usuarios</a>
+      <a *ngIf="isAdmin$ | async" routerLink="users" mat-list-item>Usuarios</a>
       <a routerLink="students" mat-list-item>Alumnos</a>
       <a routerLink="courses" mat-list-item>Cursos</a>
       <a routerLink="classes" mat-list-item>Clases</a>
@@ -21,7 +21,7 @@
       >
         <mat-icon>menu</mat-icon>
       </button>
-      <span>Backoffice</span>
+      <a class="main-title" routerLink="home">Backoffice</a>
       <span class="example-spacer"></span>
       <div class="d-flex direction-column align-items-center">
         <div mat-card-avatar class="mb-0 p-2">

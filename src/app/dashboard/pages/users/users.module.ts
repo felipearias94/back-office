@@ -8,6 +8,7 @@ import { UserService } from 'src/app/core/services/user.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import { UserDetailsComponent } from './user-details/user-details.component';
 import { RouterModule } from '@angular/router';
+import { UsersRoutingModule } from './users-routing.module';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,7 @@ import { RouterModule } from '@angular/router';
     UserDetailsComponent,
   ],
   providers: [UserService, NotificationService],
-  imports: [CommonModule, SharedModule, RouterModule],
+  imports: [CommonModule, SharedModule, RouterModule, UsersRoutingModule],
   exports: [UsersComponent],
 })
 export class UsersModule {}

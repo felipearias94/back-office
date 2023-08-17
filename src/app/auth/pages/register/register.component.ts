@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { UserService } from 'src/app/core/services/user.service';
-import { User, UserForm } from 'src/app/interfaces/User';
+import { Role, User, UserForm } from 'src/app/interfaces/User';
 
 @Component({
   selector: 'app-register',
@@ -11,17 +11,17 @@ import { User, UserForm } from 'src/app/interfaces/User';
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent {
+  nameControl = new FormControl(null, [
+    Validators.required,
+    Validators.minLength(2),
+  ]);
+  lastNameControl = new FormControl(null, [
+    Validators.required,
+    Validators.minLength(2),
+  ]);
 
-  nameControl = new FormControl('', [
-    Validators.required,
-    Validators.minLength(2),
-  ]);
-  lastNameControl = new FormControl('', [
-    Validators.required,
-    Validators.minLength(2),
-  ]);
-  emailControl = new FormControl('', [Validators.required, Validators.email]);
-  passwordControl = new FormControl('', [
+  emailControl = new FormControl(null, [Validators.required, Validators.email]);
+  passwordControl = new FormControl(null, [
     Validators.required,
     Validators.minLength(6),
   ]);
@@ -31,12 +31,12 @@ export class RegisterComponent {
     lastName: this.lastNameControl,
     email: this.emailControl,
     password: this.passwordControl,
+    role: new FormControl<string | null>(Role.guest),
   });
 
   hidePassword: boolean = true;
 
-  constructor(private userService: UserService, private router: Router) {
-  }
+  constructor(private userService: UserService, private router: Router) {}
 
   registerNewUser(): void {
     if (this.registerForm.invalid) {

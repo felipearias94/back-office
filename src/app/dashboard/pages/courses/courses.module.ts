@@ -10,6 +10,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { CoursesFeatureStoreEffects } from '../../../store/courses/courses-feature-store.effects';
 import { StoreModule } from '@ngrx/store';
 import { coursesFeatureStoreFeature as coursesStoreFeature } from '../../../store/courses/courses-feature-store.reducer';
+import { CoursesRoutingModule } from './courses-routing.module';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { coursesFeatureStoreFeature as coursesStoreFeature } from '../../../stor
     CommonModule,
     SharedModule,
     RouterModule,
+    CoursesRoutingModule,
     StoreModule.forFeature(coursesStoreFeature),
     EffectsModule.forFeature([CoursesFeatureStoreEffects]),
   ],

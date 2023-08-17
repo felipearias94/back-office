@@ -7,6 +7,7 @@ import { StudentsTableComponent } from './students-table/students-table.componen
 import { StudentFormDialogComponent } from './student-form-dialog/student-form-dialog.component';
 import { RouterModule } from '@angular/router';
 import { StudentDetailsComponent } from './student-details/student-details.component';
+import { StudentsRoutingModule } from './students-routing.module';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,7 @@ import { StudentDetailsComponent } from './student-details/student-details.compo
     StudentFormDialogComponent,
     StudentDetailsComponent,
   ],
-  imports: [CommonModule, RouterModule, SharedModule],
+  imports: [CommonModule, RouterModule, SharedModule, StudentsRoutingModule],
   providers: [StudentsService],
 })
 export class StudentsModule {}

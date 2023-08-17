@@ -3,24 +3,49 @@
     {
       "name": "Felipe",
       "lastName": "Arias",
+      "role": "ADMIN",
       "email": "felari94@gmail.com",
+      "token": "us96eFORHKGHJGF3voabys9AhnbSoxt9kG4HjU5mA5yNKd8a1kprVHTiZvDOnIV5",
       "password": "123456",
-      "token": "us93eBORHKGHJGF3voabys9AhnbSoxt9kG4HjU5mA5yNKd8a1kprVHTiZvDOnIV5",
       "id": 1
+    },
+    {
+      "name": "Juan",
+      "lastName": "Perez",
+      "email": "juan.p@gmail.com",
+      "password": "123456",
+      "token": "us93eFORHKGHJGF3voabys9AhnbSoxt9kG4HjU5mA5yNKd8a1kprVHTiZvDOnIV5",
+      "role": "ADMIN",
+      "id": 1
+    },
+    {
+      "name": "Pepe ",
+      "lastName": "Argento",
+      "role": "GUEST",
+      "email": "pepe.a@mail.com",
+      "password": "123456",
+      "token": "us94eFORHKGHJGF3voabys9AhnbSoxt9kG4HjU5mA5yNKd8a1kprVHTiZvDOnIV5",
+      "id": 2
     }
   ],
   "students": [
     {
       "name": "felipe",
       "lastName": "dfdh",
-      "coursesId": [2, 3],
+      "coursesId": [
+        2,
+        3
+      ],
       "registrationDate": "2023-08-04T21:57:37.926Z",
       "id": 1
     },
     {
       "name": "felipe",
       "lastName": "arias",
-      "coursesId": [1, 2],
+      "coursesId": [
+        1,
+        2
+      ],
       "registrationDate": "2023-08-04T21:57:37.926Z",
       "id": 2
     }

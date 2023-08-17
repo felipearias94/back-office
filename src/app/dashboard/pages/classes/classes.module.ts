@@ -6,6 +6,7 @@ import { ClassesFormDialogComponent } from './classes-form-dialog/classes-form-d
 import { ClassesTableComponent } from './classes-table/classes-table.component';
 import { ClassDetailsComponent } from './class-details/class-details.component';
 import { RouterModule } from '@angular/router';
+import { ClassesRoutingModule } from './classes-routing.module';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,6 @@ import { RouterModule } from '@angular/router';
     ClassesTableComponent,
     ClassDetailsComponent,
   ],
-  imports: [CommonModule, RouterModule, SharedModule],
+  imports: [CommonModule, RouterModule, SharedModule, ClassesRoutingModule],
 })
 export class ClassesModule {}

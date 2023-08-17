@@ -3,12 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { StudentsComponent } from './pages/students/students.component';
 import { CoursesComponent } from './pages/courses/courses.component';
 import { ClassesComponent } from './pages/classes/classes.component';
-import { UserDetailsComponent } from './pages/users/user-details/user-details.component';
-import { UsersComponent } from './pages/users/users.component';
 import { HomeComponent } from './pages/home/home.component';
-import { StudentDetailsComponent } from './pages/students/student-details/student-details.component';
 import { CourseDetailsComponent } from './pages/courses/course-details/course-details.component';
 import { ClassDetailsComponent } from './pages/classes/class-details/class-details.component';
+import { roleGuard } from '../core/guards/role.guard';
 
 const routes: Routes = [
   {
@@ -17,56 +15,27 @@ const routes: Routes = [
   },
   {
     path: 'users',
-    children: [
-      {
-        path: '',
-        component: UsersComponent,
-      },
-      {
-        path: ':id',
-        component: UserDetailsComponent,
-      },
-    ],
+    canActivate: [roleGuard],
+    loadChildren: () =>
+      import('./pages/users/users.module').then((m) => m.UsersModule),
   },
   {
     path: 'students',
-    children: [
-      {
-        path: '',
-        component: StudentsComponent,
-      },
-
-      {
-        path: ':studentId',
-        component: StudentDetailsComponent,
-      },
-    ],
+    canActivate: [roleGuard],
+    loadChildren: () =>
+      import('./pages/students/students.module').then((m) => m.StudentsModule),
   },
   {
     path: 'courses',
-    children: [
-      {
-        path: '',
-        component: CoursesComponent,
-      },
-      {
-        path: ':courseId',
-        component: CourseDetailsComponent,
-      },
-    ],
+    canActivate: [roleGuard],
+    loadChildren: () =>
+      import('./pages/courses/courses.module').then((m) => m.CoursesModule),
   },
   {
     path: 'classes',
-    children: [
-      {
-        path: '',
-        component: ClassesComponent,
-      },
-      {
-        path: ':classId',
-        component: ClassDetailsComponent,
-      },
-    ],
+    canActivate: [roleGuard],
+    loadChildren: () =>
+      import('./pages/classes/classes.module').then((m) => m.ClassesModule),
   },
   {
     path: '**',
