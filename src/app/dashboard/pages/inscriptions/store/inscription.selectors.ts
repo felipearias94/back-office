@@ -10,3 +10,13 @@ export const selectInscriptions = createSelector(
   selectInscriptionState,
   (state) => state.data
 );
+
+export const selectCoursesOptions = createSelector(
+  selectInscriptionState,
+  (state) => state.courseOptions
+);
+
+export const selectStudentOption = createSelector(
+  selectInscriptionState,
+  (state) => state.studentsOptions
+);

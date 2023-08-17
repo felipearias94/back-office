@@ -1,1 +1,53 @@
-<p>inscriptions-dialog works!</p>
+<mat-card class="form-card">
+  <mat-card-header class="pb-4">
+    <mat-card-title higherFont> Nueva inscripción </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <form class="container m-0" [formGroup]="inscriptionForm">
+      <div class="row">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Curso: </mat-label>
+          <mat-select [formControl]="courseIdControl">
+            <ng-container>
+              <mat-option
+                *ngFor="let course of coursesOptions$ | async"
+                [value]="course.id"
+                >{{ course.courseName }}</mat-option
+              >
+            </ng-container>
+          </mat-select>
+          <mat-error *ngFor="let error of courseIdControl.errors | keyvalue">
+            {{ error | controlErrorMessage }}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Alumno: </mat-label>
+          <mat-select [formControl]="studentsIdControl">
+            <ng-container>
+              <mat-option
+                *ngFor="let student of studentsOptions$ | async"
+                [value]="student.id"
+                >{{ student | fullName }}</mat-option
+              >
+            </ng-container>
+          </mat-select>
+          <mat-error *ngFor="let error of studentsIdControl.errors | keyvalue">
+            {{ error | controlErrorMessage }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </form>
+  </mat-card-content>
+  <div mat-dialog-actions class="d-flex justify-content-end">
+    <button type="submit" mat-raised-button mat-dialog-close>Cancelar</button>
+    <button
+      type="submit"
+      mat-raised-button
+      color="primary"
+      (click)="onSubmit()"
+    >
+      Generar
+    </button>
+  </div>
+</mat-card>

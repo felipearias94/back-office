@@ -10,7 +10,6 @@ import { HandleErrorService } from './handle-error.service';
   providedIn: 'root',
 })
 export class CoursesService {
-  private generatedIDs = new Set<number>();
   private _courses$ = new BehaviorSubject<Course[]>([]);
   private courses$ = this._courses$.asObservable();
   private _isLoading$ = new BehaviorSubject<boolean>(false);

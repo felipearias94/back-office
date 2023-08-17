@@ -6,6 +6,10 @@ import { InscriptionActions } from './inscription.actions';
 import { HttpClient } from '@angular/common/http';
 import { InscriptionWithStudent } from 'src/app/interfaces/Inscriptions';
 import { environment } from 'src/environments/environment.prod';
+import { CoursesService } from 'src/app/core/services/courses.service';
+import { StudentsService } from 'src/app/core/services/students.service';
+import { Course } from 'src/app/interfaces/Courses';
+import { Student } from 'src/app/interfaces/Students';
 
 @Injectable()
 export class InscriptionEffects {
@@ -23,6 +27,36 @@ export class InscriptionEffects {
     );
   });
 
+  loadStudentsOptions$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(InscriptionActions.loadInscriptions),
+      concatMap(() =>
+        this.getStudentsOptions().pipe(
+          map((data) =>
+            InscriptionActions.loadStudentsOptionsSuccess({ data })
+          ),
+          catchError((error) =>
+            of(InscriptionActions.loadStudentsOptionsFailure({ error }))
+          )
+        )
+      )
+    );
+  });
+
+  loadCoursesOptions$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(InscriptionActions.loadInscriptions),
+      concatMap(() =>
+        this.getCoursesOptions().pipe(
+          map((data) => InscriptionActions.loadCoursesOptionsSuccess({ data })),
+          catchError((error) =>
+            of(InscriptionActions.loadCoursesOptionsFailure({ error }))
+          )
+        )
+      )
+    );
+  });
+
   constructor(private actions$: Actions, private httpClient: HttpClient) {}
 
   apiUrl = environment.baseApiUrl + 'inscriptions';
@@ -30,6 +64,14 @@ export class InscriptionEffects {
   private getInscriptionsFromDB(): Observable<InscriptionWithStudent[]> {
     return this.httpClient.get<InscriptionWithStudent[]>(
       this.apiUrl + '?_expand=course'
-    )
+    );
+  }
+
+  private getCoursesOptions(): Observable<Course[]> {
+    return this.httpClient.get<Course[]>(environment.baseApiUrl + 'courses/');
+  }
+
+  private getStudentsOptions(): Observable<Student[]> {
+    return this.httpClient.get<Student[]>(environment.baseApiUrl + 'students/');
   }
 }
