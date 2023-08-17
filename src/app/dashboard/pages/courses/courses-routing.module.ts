@@ -14,7 +14,7 @@ import { CourseDetailsComponent } from './course-details/course-details.componen
         component: CoursesComponent,
       },
       {
-        path: ':id',
+        path: ':courseId',
         component: CourseDetailsComponent,
       },
     ]),

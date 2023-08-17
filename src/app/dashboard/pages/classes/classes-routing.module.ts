@@ -14,7 +14,7 @@ import { ClassDetailsComponent } from './class-details/class-details.component';
         component: ClassesComponent,
       },
       {
-        path: ':id',
+        path: ':classId',
         component: ClassDetailsComponent,
       },
     ]),

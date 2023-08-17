@@ -14,7 +14,7 @@ import { StudentDetailsComponent } from './student-details/student-details.compo
         component: StudentsComponent,
       },
       {
-        path: ':id',
+        path: ':studentId',
         component: StudentDetailsComponent,
       },
     ]),

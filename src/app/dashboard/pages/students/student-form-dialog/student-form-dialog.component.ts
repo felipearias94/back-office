@@ -21,12 +21,10 @@ export class StudentFormDialogComponent implements OnInit {
   registrationDateControl = new FormControl<Date | null>(new Date(), [
     Validators.required,
   ]);
-  coursesControl = new FormControl<number[] | null>([], [Validators.required]);
 
   studentForm: FormGroup<StudentForm> = new FormGroup({
     name: this.nameControl,
     lastName: this.lastNameControl,
-    coursesId: this.coursesControl,
     registrationDate: this.registrationDateControl,
   });
 

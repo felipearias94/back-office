@@ -30,8 +30,8 @@
   ],
   "students": [
     {
-      "name": "felipe",
-      "lastName": "dfdh",
+      "name": "Maria",
+      "lastName": "Gonzalez",
       "coursesId": [
         2,
         3
@@ -40,14 +40,26 @@
       "id": 1
     },
     {
-      "name": "felipe",
-      "lastName": "arias",
+      "name": "Pedro",
+      "lastName": "Picapiedra",
       "coursesId": [
         1,
         2
       ],
       "registrationDate": "2023-08-04T21:57:37.926Z",
       "id": 2
+    },
+    {
+      "name": "Mateo",
+      "lastName": "Garcia",
+      "registrationDate": "2023-08-17T20:50:48.674Z",
+      "id": 3
+    },
+    {
+      "name": "Valentina",
+      "lastName": "Rodriguez",
+      "registrationDate": "2023-08-17T20:51:05.582Z",
+      "id": 4
     }
   ],
   "courses": [
@@ -85,6 +97,18 @@
       "courseId": "2",
       "durationInMin": 100,
       "id": 2
+    },
+    {
+      "className": "Redux",
+      "courseId": "1",
+      "durationInMin": 120,
+      "id": 3
+    },
+    {
+      "className": "Consultas HTTP",
+      "courseId": "2",
+      "durationInMin": 130,
+      "id": 4
     }
   ]
 }
