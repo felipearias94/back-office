@@ -2,8 +2,8 @@ import { createActionGroup, emptyProps, props } from '@ngrx/store';
 import { User } from 'src/app/interfaces/User';
 
 export const AuthActions = createActionGroup({
-  source: 'auth',
+  source: 'Auth',
   events: {
-    setAuthUser: props<{ payload: User | null }>(),
+    'set auth user': props<{ payload: User | null }>(),
   },
 });

@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { map } from 'rxjs';
 import { selectIsAdmin } from 'src/app/store/auth/auth.selector';
 
-export const roleGuard: CanActivateFn = (route, state) => {
+export const isAdminGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
   return inject(Store)
     .select(selectIsAdmin)

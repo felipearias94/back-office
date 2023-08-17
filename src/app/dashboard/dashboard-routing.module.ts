@@ -6,7 +6,8 @@ import { ClassesComponent } from './pages/classes/classes.component';
 import { HomeComponent } from './pages/home/home.component';
 import { CourseDetailsComponent } from './pages/courses/course-details/course-details.component';
 import { ClassDetailsComponent } from './pages/classes/class-details/class-details.component';
-import { roleGuard } from '../core/guards/role.guard';
+import { isAdminGuard } from '../core/guards/isAdmin.guard';
+import { hasRoleGuard } from '../core/guards/has-role.guard';
 
 const routes: Routes = [
   {
@@ -15,25 +16,25 @@ const routes: Routes = [
   },
   {
     path: 'users',
-    canActivate: [roleGuard],
+    canActivate: [isAdminGuard],
     loadChildren: () =>
       import('./pages/users/users.module').then((m) => m.UsersModule),
   },
   {
     path: 'students',
-    canActivate: [roleGuard],
+    canActivate: [hasRoleGuard],
     loadChildren: () =>
       import('./pages/students/students.module').then((m) => m.StudentsModule),
   },
   {
     path: 'courses',
-    canActivate: [roleGuard],
+    canActivate: [hasRoleGuard],
     loadChildren: () =>
       import('./pages/courses/courses.module').then((m) => m.CoursesModule),
   },
   {
     path: 'classes',
-    canActivate: [roleGuard],
+    canActivate: [hasRoleGuard],
     loadChildren: () =>
       import('./pages/classes/classes.module').then((m) => m.ClassesModule),
   },

@@ -16,5 +16,10 @@ export const selectAuthUserRole = createSelector(
 
 export const selectIsAdmin = createSelector(
   selectAuthUser,
-  (state) => state.role === Role.admin
+  (state) => state?.role === Role.admin
+);
+
+export const selectHasRole = createSelector(
+  selectAuthUser,
+  (state) => !!state?.role
 );
