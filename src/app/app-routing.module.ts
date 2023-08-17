@@ -8,7 +8,7 @@ import { hasRoleGuard } from './core/guards/has-role.guard';
 const routes: Routes = [
   {
     path: 'dashboard',
-    canActivate: [authGuard, hasRoleGuard],
+    canActivate: [authGuard],
     component: DashboardComponent,
     loadChildren: () =>
       import('./dashboard/dashboard.module').then((m) => m.DashboardModule),

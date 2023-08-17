@@ -37,6 +37,10 @@ export class AuthService {
       })
       .pipe(
         map((usersResponse) => {
+          if (usersResponse.length) {
+            const authUser = usersResponse[0];
+            this.store.dispatch(AuthActions.setAuthUser({ payload: authUser }));
+          }
           return !!usersResponse.length;
         })
       );
@@ -54,7 +58,6 @@ export class AuthService {
         next: (response) => {
           if (response.length) {
             const authUser = response[0];
-            // this._authUser$.next(authUser);
             this.store.dispatch(AuthActions.setAuthUser({ payload: authUser }));
             this.router.navigate(['/dashboard']);
             localStorage.setItem('token', authUser.token);
