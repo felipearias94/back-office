@@ -1,7 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
 import { Course } from 'src/app/interfaces/Courses';
-import { InscriptionWithStudent } from 'src/app/interfaces/Inscriptions';
+import {
+  Inscription,
+  InscriptionPayload,
+  InscriptionWithStudent,
+} from 'src/app/interfaces/Inscriptions';
 import { Student } from 'src/app/interfaces/Students';
 
 export const InscriptionActions = createActionGroup({
@@ -18,5 +22,9 @@ export const InscriptionActions = createActionGroup({
     'Load Students Options': emptyProps(),
     'Load Students Options Success': props<{ data: Student[] }>(),
     'Load Students Options Failure': props<{ error: HttpErrorResponse }>(),
+
+    'Create Inscription': props<{ payload: InscriptionPayload }>(),
+    'Create Inscription Success': props<{ data: Inscription }>(),
+    'Create Inscription Failure': props<{ error: HttpErrorResponse }>(),
   },
 });

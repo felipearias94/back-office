@@ -9,6 +9,7 @@ import {
   selectCoursesOptions,
   selectStudentOption,
 } from '../store/inscription.selectors';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-inscriptions-dialog',
@@ -27,7 +28,7 @@ export class InscriptionsDialogComponent implements OnInit {
     courseId: this.courseIdControl,
   });
 
-  constructor(private store: Store) {
+  constructor(private store: Store, private matDialogRef: MatDialogRef<InscriptionsDialogComponent>) {
     this.coursesOptions$ = this.store.select(selectCoursesOptions);
     this.studentsOptions$ = this.store.select(selectStudentOption);
   }
@@ -38,6 +39,14 @@ export class InscriptionsDialogComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log(this.inscriptionForm.value);
+    if (this.inscriptionForm.valid) {
+      console.log(this.inscriptionForm.value);
+      this.store.dispatch(
+        InscriptionActions.createInscription({
+          payload: this.inscriptionForm.getRawValue(),
+        })
+      );
+      this.matDialogRef.close();
+    }
   }
 }

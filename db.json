@@ -107,17 +107,54 @@
     {
       "id": 1,
       "courseId": 2,
-      "studentsId": [1, 2]
+      "studentsId": [
+        1,
+        2
+      ]
     },
     {
       "id": 2,
       "courseId": 1,
-      "studentsId": [1, 2, 3, 4]
+      "studentsId": [
+        1,
+        2,
+        3,
+        4
+      ]
     },
     {
       "id": 3,
       "courseId": 3,
-      "studentsId": [1, 2, 3]
+      "studentsId": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "studentsId": 1,
+      "courseId": 1,
+      "id": 4
+    },
+    {
+      "studentsId": 4,
+      "courseId": 3,
+      "id": 5
+    },
+    {
+      "studentsId": 4,
+      "courseId": 3,
+      "id": 6
+    },
+    {
+      "studentsId": 1,
+      "courseId": 2,
+      "id": 7
+    },
+    {
+      "studentsId": 3,
+      "courseId": 1,
+      "id": 8
     }
   ]
 }

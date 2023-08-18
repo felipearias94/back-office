@@ -7,7 +7,12 @@ export interface Inscription {
   studentsId: number[];
 }
 
-export interface InscriptionWithStudent extends Inscription{
+export interface InscriptionWithStudent extends Inscription {
   //students: Student[];
   course: Course;
+}
+
+export interface InscriptionPayload {
+  courseId: number | null;
+  //studentsId: number[] | null;
 }
