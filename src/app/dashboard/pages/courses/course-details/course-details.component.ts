@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { CoursesService } from 'src/app/core/services/courses.service';
-import { StudentsService } from 'src/app/core/services/students.service';
 import { Course } from 'src/app/interfaces/Courses';
 import { Student } from 'src/app/interfaces/Students';
 import { CoursesFeatureStoreActions } from 'src/app/store/courses/courses-feature-store.actions';
+import { selectCourseById } from 'src/app/store/courses/courses-feature-store.selectors';
 
 @Component({
   selector: 'app-course-details',
@@ -14,12 +13,9 @@ import { CoursesFeatureStoreActions } from 'src/app/store/courses/courses-featur
 })
 export class CourseDetailsComponent implements OnInit {
   courseId: number;
-  selectedCourse: Course | undefined;
-  studentsInCourse: Student[] | null;
+  selectedCourse: Course | null;
 
   constructor(
-    private courseService: CoursesService,
-    private studentsService: StudentsService,
     private activatedRoute: ActivatedRoute,
     private store: Store
   ) {
@@ -27,29 +23,17 @@ export class CourseDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadCourseById();
-    this.loadStudentsInCourse();
     this.store.dispatch(
-      CoursesFeatureStoreActions.loadCategoryDetails({
+      CoursesFeatureStoreActions.loadCourseDetails({
         courseId: this.courseId,
       })
     );
+    this.loadCourseById();
   }
 
   loadCourseById(): void {
-    this.courseService.getCourseById(this.courseId).subscribe({
-      next: (course) => {
-        this.selectedCourse = course;
-      },
-    });
-  }
-
-  loadStudentsInCourse(): void {
-    this.studentsService.loadStudents();
-    this.studentsService.getStudentsByCourseId(this.courseId).subscribe({
-      next: (students) => {
-        this.studentsInCourse = students;
-      },
-    });
+    this.store
+      .select(selectCourseById)
+      .subscribe({ next: (course) => (this.selectedCourse = course) });
   }
 }

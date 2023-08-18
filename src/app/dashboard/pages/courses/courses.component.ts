@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { CoursesService } from 'src/app/core/services/courses.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import { Observable } from 'rxjs';
 import { Course } from 'src/app/interfaces/Courses';
@@ -10,8 +9,12 @@ import {
   ConfirmationType,
 } from 'src/app/shared/components/confirm-action-modal/confirm-action-modal.component';
 import { Store } from '@ngrx/store';
-import { selectCoursesArray, selectCoursesState } from '../../../store/courses/courses-feature-store.selectors';
+import {
+  selectCoursesArray,
+  selectCoursesState,
+} from '../../../store/courses/courses-feature-store.selectors';
 import { CoursesFeatureStoreActions } from 'src/app/store/courses/courses-feature-store.actions';
+import { selectIsAdmin } from 'src/app/store/auth/auth.selector';
 
 @Component({
   selector: 'app-courses',
@@ -20,19 +23,15 @@ import { CoursesFeatureStoreActions } from 'src/app/store/courses/courses-featur
 })
 export class CoursesComponent implements OnInit {
   courses$: Observable<Course[]>;
+  isAdmin$: Observable<boolean>;
 
-  constructor(
-    private store: Store,
-    private coursesService: CoursesService,
-    private matDialog: MatDialog
-  ) {
-    this.coursesService.loadCourses();
-    // this.courses$ = this.coursesService.getCourses();
+  constructor(private store: Store, private matDialog: MatDialog) {
     this.courses$ = this.store.select(selectCoursesArray);
   }
 
   ngOnInit(): void {
     this.store.dispatch(CoursesFeatureStoreActions.loadCourses());
+    this.isAdmin$ = this.store.select(selectIsAdmin);
   }
 
   onAddNewCourse(): void {
@@ -42,7 +41,9 @@ export class CoursesComponent implements OnInit {
       .subscribe({
         next: (newCourse: Course) => {
           if (newCourse) {
-            this.coursesService.createCourse(newCourse);
+            this.store.dispatch(
+              CoursesFeatureStoreActions.createCourse({ payload: newCourse })
+            );
           }
         },
       });
@@ -55,7 +56,9 @@ export class CoursesComponent implements OnInit {
       .subscribe({
         next: (updatedCourse: Course) => {
           if (updatedCourse) {
-            this.coursesService.editCourse(updatedCourse);
+            this.store.dispatch(
+              CoursesFeatureStoreActions.editCourse({ payload: updatedCourse })
+            );
           }
         },
       });
@@ -73,7 +76,11 @@ export class CoursesComponent implements OnInit {
       .afterClosed()
       .subscribe((confirmation) => {
         if (confirmation) {
-          this.coursesService.deleteCourse(courseToDelete);
+          this.store.dispatch(
+            CoursesFeatureStoreActions.deleteCourse({
+              courseId: courseToDelete.id,
+            })
+          );
         }
       });
   }

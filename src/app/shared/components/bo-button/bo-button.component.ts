@@ -6,6 +6,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrls: ['./bo-button.component.scss'],
 })
 export class BoButtonComponent {
+  @Input() disabled: boolean | null;
   @Input() colorType: string;
   @Input() iconName: string;
   @Input() label: string;

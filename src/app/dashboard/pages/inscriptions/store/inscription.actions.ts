@@ -26,5 +26,11 @@ export const InscriptionActions = createActionGroup({
     'Create Inscription': props<{ payload: InscriptionPayload }>(),
     'Create Inscription Success': props<{ data: Inscription }>(),
     'Create Inscription Failure': props<{ error: HttpErrorResponse }>(),
+
+    'Delete Inscription': props<{ inscriptionId: number }>(),
+    'Delete Inscription Success': props<{
+      inscriptionId: number | undefined;
+    }>(),
+    'Delete Inscription Failure': props<{ error: HttpErrorResponse }>(),
   },
 });

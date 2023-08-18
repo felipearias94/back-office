@@ -29,7 +29,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -80,6 +80,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatNativeDateModule,
     MatSelectModule,
     MatCheckboxModule,
+    MatTooltipModule,
     // Directives-Pipes
     ControlErrorMessagePipe,
     FullNamePipe,

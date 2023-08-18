@@ -24,7 +24,7 @@ export class InscriptionsDialogComponent implements OnInit {
   courseIdControl = new FormControl(null, [Validators.required]);
 
   inscriptionForm = new FormGroup({
-    studentsId: this.studentsIdControl,
+    studentId: this.studentsIdControl,
     courseId: this.courseIdControl,
   });
 
@@ -40,7 +40,6 @@ export class InscriptionsDialogComponent implements OnInit {
 
   onSubmit(): void {
     if (this.inscriptionForm.valid) {
-      console.log(this.inscriptionForm.value);
       this.store.dispatch(
         InscriptionActions.createInscription({
           payload: this.inscriptionForm.getRawValue(),

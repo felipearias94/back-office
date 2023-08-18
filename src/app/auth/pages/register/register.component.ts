@@ -31,7 +31,7 @@ export class RegisterComponent {
     lastName: this.lastNameControl,
     email: this.emailControl,
     password: this.passwordControl,
-    role: new FormControl<string | null>(Role.guest),
+    role: new FormControl<string | null>(Role.user),
   });
 
   hidePassword: boolean = true;

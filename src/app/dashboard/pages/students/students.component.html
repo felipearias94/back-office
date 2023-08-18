@@ -1,9 +1,15 @@
 <div class="mb-5">
-  <app-bo-button
-    iconName="person_add"
-    label="Nuevo Alumno"
-    (onClick)="onAddNewStudent()"
-  ></app-bo-button>
+  <span
+    matTooltip="Solo un usuario con rol de administrador puede crear nuevos cursos"
+    [matTooltipDisabled]="isAdmin$ | async"
+  >
+    <app-bo-button
+      [disabled]="!(isAdmin$ | async)"
+      iconName="person_add"
+      label="Nuevo Alumno"
+      (onClick)="onAddNewStudent()"
+    ></app-bo-button>
+  </span>
 </div>
 <div class="title d-flex">
   <mat-icon>school</mat-icon>

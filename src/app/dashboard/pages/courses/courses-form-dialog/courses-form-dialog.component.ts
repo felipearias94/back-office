@@ -1,7 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Course, CourseForm } from 'src/app/interfaces/Courses';
+import { dateRangeValidator } from 'src/app/shared/validators/data-range-validator';
 
 @Component({
   selector: 'app-courses-form-dialog',
@@ -16,10 +17,18 @@ export class CoursesFormDialogComponent implements OnInit {
 
   isEditing: boolean = !!this.updateableCourse;
 
-  courseNameControl = new FormControl<string | null>('');
-  teacherControl = new FormControl<string | null>('');
-  startDateControl = new FormControl<Date | null>(new Date());
-  endDateControl = new FormControl<Date | null>(new Date());
+  courseNameControl = new FormControl<string | null>(null, [
+    Validators.required,
+  ]);
+  teacherControl = new FormControl<string | null>(null, [Validators.required]);
+  startDateControl = new FormControl<Date | null>(new Date(), [
+    Validators.required,
+    dateRangeValidator,
+  ]);
+  endDateControl = new FormControl<Date | null>(new Date(), [
+    Validators.required,
+    dateRangeValidator,
+  ]);
 
   courseForm: FormGroup<CourseForm> = new FormGroup({
     courseName: this.courseNameControl,

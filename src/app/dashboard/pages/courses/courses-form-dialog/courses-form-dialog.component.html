@@ -53,6 +53,9 @@
             [for]="picker"
           ></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngFor="let error of startDateControl.errors | keyvalue">
+            {{ error | controlErrorMessage }}
+          </mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline" class="w-50">
           <mat-label>Fecha fin</mat-label>
@@ -67,6 +70,9 @@
             [for]="picker1"
           ></mat-datepicker-toggle>
           <mat-datepicker #picker1></mat-datepicker>
+          <mat-error *ngFor="let error of endDateControl.errors | keyvalue">
+            {{ error | controlErrorMessage }}
+          </mat-error>
         </mat-form-field>
       </div>
     </form>

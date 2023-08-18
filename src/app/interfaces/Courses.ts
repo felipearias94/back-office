@@ -14,3 +14,10 @@ export interface CourseForm {
   startDate: FormControl<Date | null>;
   endDate: FormControl<Date | null>;
 }
+
+export interface CoursePayload {
+  courseName: string;
+  teacher: string;
+  startDate: Date;
+  endDate: Date;
+}

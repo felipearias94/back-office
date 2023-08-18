@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { NotificationService } from 'src/app/core/services/notification.service';
@@ -9,21 +9,29 @@ import {
   ConfirmActionModalComponent,
   ConfirmationType,
 } from 'src/app/shared/components/confirm-action-modal/confirm-action-modal.component';
+import { Store } from '@ngrx/store';
+import { selectIsAdmin } from 'src/app/store/auth/auth.selector';
 
 @Component({
   selector: 'app-students',
   templateUrl: './students.component.html',
   styleUrls: ['./students.component.scss'],
 })
-export class StudentsComponent {
+export class StudentsComponent implements OnInit {
   students$: Observable<Student[]>;
+  isAdmin$: Observable<boolean>;
 
   constructor(
     private studentsService: StudentsService,
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    private store: Store
   ) {
     this.studentsService.loadStudents();
     this.students$ = this.studentsService.getStudents();
+  }
+
+  ngOnInit(): void {
+    this.isAdmin$ = this.store.select(selectIsAdmin);
   }
 
   onAddNewStudent(): void {

@@ -19,37 +19,22 @@
   <ng-container matColumnDef="course">
     <th mat-header-cell *matHeaderCellDef higherFont>Nombre curso</th>
     <td mat-cell *matCellDef="let inscription">
-      {{ inscription.course.courseName }}
+      {{ !!inscription.course ? inscription.course.courseName : "" }}
     </td>
   </ng-container>
 
   <ng-container matColumnDef="students">
-    <th mat-header-cell *matHeaderCellDef higherFont>Cant. Inscriptos</th>
+    <th mat-header-cell *matHeaderCellDef higherFont>Legajo Alumno</th>
     <td mat-cell *matCellDef="let inscription">
-      {{ inscription.studentsId.length }}
+      {{ !!inscription.student ? (inscription.student | fullName) : "" }}
     </td>
   </ng-container>
 
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef higherFont>Acciones</th>
-    <td mat-cell *matCellDef="let course">
+    <td mat-cell *matCellDef="let inscription">
       <button
-        mat-icon-button
-        color="primary"
-        aria-label="Example icon button with a heart icon"
-      >
-        <mat-icon
-          ><span class="material-symbols-outlined"> visibility </span></mat-icon
-        >
-      </button>
-      <button
-        mat-icon-button
-        color="black"
-        aria-label="Example icon button with a heart icon"
-      >
-        <mat-icon>edit</mat-icon>
-      </button>
-      <button
+        (click)="onDeleteInscription(inscription)"
         mat-icon-button
         color="warn"
         aria-label="Example icon button with a heart icon"

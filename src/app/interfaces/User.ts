@@ -21,5 +21,4 @@ export interface User {
 export enum Role {
   admin = 'ADMIN',
   user = 'USER',
-  guest = 'GUEST'
 }

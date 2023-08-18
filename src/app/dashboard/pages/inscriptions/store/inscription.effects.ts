@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, concatMap } from 'rxjs/operators';
-import { Observable, EMPTY, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { InscriptionActions } from './inscription.actions';
 import { HttpClient } from '@angular/common/http';
 import {
@@ -10,8 +10,6 @@ import {
   InscriptionWithStudent,
 } from 'src/app/interfaces/Inscriptions';
 import { environment } from 'src/environments/environment.prod';
-import { CoursesService } from 'src/app/core/services/courses.service';
-import { StudentsService } from 'src/app/core/services/students.service';
 import { Course } from 'src/app/interfaces/Courses';
 import { Student } from 'src/app/interfaces/Students';
 import { Store } from '@ngrx/store';
@@ -76,7 +74,25 @@ export class InscriptionEffects {
     );
   });
 
-  createSaleSuccess$ = createEffect(
+  deleteInscription$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(InscriptionActions.deleteInscription),
+      concatMap((action) =>
+        this.deleteInscription(action.inscriptionId).pipe(
+          map((data) =>
+            InscriptionActions.deleteInscriptionSuccess({
+              inscriptionId: data.id,
+            })
+          ),
+          catchError((error) =>
+            of(InscriptionActions.deleteInscriptionFailure({ error }))
+          )
+        )
+      )
+    );
+  });
+
+  createInscriptionSuccess$ = createEffect(
     () => {
       return this.actions$.pipe(
         ofType(InscriptionActions.createInscriptionSuccess),
@@ -96,7 +112,7 @@ export class InscriptionEffects {
 
   private getInscriptionsFromDB(): Observable<InscriptionWithStudent[]> {
     return this.httpClient.get<InscriptionWithStudent[]>(
-      this.apiUrl + '?_expand=course'
+      this.apiUrl + '?_expand=course&_expand=student'
     );
   }
 
@@ -110,5 +126,11 @@ export class InscriptionEffects {
 
   private createInscription(payload: InscriptionPayload) {
     return this.httpClient.post<Inscription>(this.apiUrl, payload);
+  }
+
+  private deleteInscription(inscriptionId: number): Observable<Inscription> {
+    return this.httpClient.delete<Inscription>(
+      `${this.apiUrl}/${inscriptionId}`
+    );
   }
 }

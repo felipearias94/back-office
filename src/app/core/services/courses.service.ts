@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, map, mergeMap, take } from 'rxjs';
-import { Course } from 'src/app/interfaces/Courses';
+import { Course, CoursePayload } from 'src/app/interfaces/Courses';
 import { environment } from 'src/environments/environment.prod';
 import { NotificationService } from './notification.service';
 import { HandleErrorService } from './handle-error.service';
@@ -41,7 +41,9 @@ export class CoursesService {
     return this.courses$;
   }
 
-  public getCourseById(courseId: number): Observable<Course | undefined> {
+  public getCourseById(
+    courseId: number | undefined
+  ): Observable<Course | undefined> {
     return this._courses$.pipe(
       take(1),
       map((courses) => courses.find((course) => course.id === courseId))
@@ -53,70 +55,18 @@ export class CoursesService {
       ?.courseName;
   }
 
-  public createCourse(newCourse: Course) {
-    this.httpClient
-      .post<Course>(this.coursesUrl, newCourse)
-      .pipe(
-        mergeMap((studentCreated) =>
-          this._courses$.pipe(
-            take(1),
-            map((currentArray) => [...currentArray, studentCreated])
-          )
-        )
-      )
-      .subscribe({
-        next: (updatedArray) => {
-          this._courses$.next(updatedArray);
-          this.notificationService.showNotification(
-            `Se creó correctamente el curso: ${newCourse.courseName}`
-          );
-        },
-        error: (error) => {
-          this.handleErrorService.handleErrorResponse(error);
-        },
-      });
+  public createCourse(newCourse: CoursePayload): Observable<Course> {
+    return this.httpClient.post<Course>(this.coursesUrl, newCourse);
   }
 
-  public editCourse(courseToUpdate: Course): void {
-    this.httpClient
-      .put(`${this.coursesUrl}${courseToUpdate.id}`, courseToUpdate)
-      .subscribe({
-        next: () => {
-          this.loadCourses();
-          this.notificationService.showNotification(
-            `Se actualizó al curso: ${courseToUpdate.courseName}`
-          );
-        },
-        error: (error) => {
-          this.handleErrorService.handleErrorResponse(error);
-        },
-      });
+  public editCourse(courseToUpdate: Course): Observable<Course> {
+    return this.httpClient.put<Course>(
+      `${this.coursesUrl}${courseToUpdate.id}`,
+      courseToUpdate
+    );
   }
 
-  public deleteCourse(courseToDelete: Course): void {
-    const courseId = courseToDelete.id;
-    this.httpClient
-      .delete(`${this.coursesUrl}${courseId}`)
-      .pipe(
-        mergeMap((responseUserDelete) =>
-          this.courses$.pipe(
-            take(1),
-            map((currentArray) =>
-              currentArray.filter((user) => user.id !== courseId)
-            )
-          )
-        )
-      )
-      .subscribe({
-        next: (updatedArray) => {
-          this._courses$.next(updatedArray);
-          this.notificationService.showNotification(
-            `Se eliminó al curso: ${courseToDelete.courseName}`
-          );
-        },
-        error: (error) => {
-          this.handleErrorService.handleErrorResponse(error);
-        },
-      });
+  public deleteCourse(courseId: number): Observable<Course> {
+    return this.httpClient.delete<Course>(`${this.coursesUrl}${courseId}`);
   }
 }
